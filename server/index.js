@@ -16,7 +16,7 @@ app.use(cors());
 
 app.use('/', danhmuc);
 
-app.use(_AuthMiddleWare.isAuth);
+// app.use(_AuthMiddleWare.isAuth);
 app.use('/', user);
 
 app.listen( PORT, ()=>{
