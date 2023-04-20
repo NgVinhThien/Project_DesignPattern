@@ -10,6 +10,5 @@ danhmuc.getAll= function(result){
         if(err) throw err; 
         result(results);
     });
-    
 }
 export default danhmuc;
