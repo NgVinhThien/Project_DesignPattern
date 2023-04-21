@@ -9,10 +9,10 @@ const user= function(user){
     this.username= user.username;
     this.password= user.password;
 }
-user.signUp= function(data, result){
-    connection.query("insert into khach_hang SET?", data, (err, results)=>{
+user.signIn= function(data, result){
+    connection.query("select * from khach_hang where username=? and upassword=?", [data.username, data.password], (err, results)=>{
         if(err) throw err; 
-        result(results);
+        result(results[0]);
     });
 }
 
