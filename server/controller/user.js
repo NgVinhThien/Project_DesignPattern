@@ -1,4 +1,5 @@
 import user from '../model/user.js';
+import _JWT from '../common/_JWT.js';
 export const signUp=(req, res)=>{
     console.log("called to sign up");
     // const {ho_ten, dia_chi, sdt, email, username, password}= req.body;
@@ -17,8 +18,14 @@ export const signUp=(req, res)=>{
 export const signIn=(req, res)=>{
     console.log("called to sign in");
     var data= req.body;
-    user.signIn(data, function(respose){
-        res.send({result: respose});
+    user.signIn(data,async function(result){
+        if(result !=0){
+            const _token= await _JWT.make(result);
+            res.send({user: _token});
+        }
+        else{
+            res.send({message: "Tài khoản hoặc mật khẩu không đúng"})
+        }
     })
 };
 export const secret=(res, req)=>{
