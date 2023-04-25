@@ -20,9 +20,9 @@ app.use(cors());
 app.use('/', danhmuc);
 app.use('/', hangxe);
 app.use('/', xe);
-app.use('/', signIn);
 app.use('/', signUp);
-app.use(_AuthMiddleWare.isAuth);
+app.use('/', signIn);
+// app.use(_AuthMiddleWare.isAuth);
 app.use('/', user);
 app.listen( PORT, ()=>{
     console.log("Running server...")

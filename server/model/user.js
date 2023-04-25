@@ -10,7 +10,7 @@ const user= function(user){
     this.password= user.password;
 }
 user.signIn= function(data, result){
-    connection.query("select * from khach_hang where username=? and password=?", [data.username, data.upassword], (err, results)=>{
+    connection.query("select * from khach_hang where username=? and upassword=?", [data.username, data.upassword], (err, results)=>{
         if(err) throw err; 
         result(results);
     });
