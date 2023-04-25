@@ -1,5 +1,7 @@
 import user from '../model/user.js';
 import _JWT from '../common/_JWT.js';
+
+
 export const signIn=(req, res)=>{
     console.log("called to sign in");
     var data= req.body;
@@ -20,18 +22,17 @@ export const signIn=(req, res)=>{
     })
 };
 export const signUp = (req, res) => {
+    console.log('called to sing up');
+
   const data = req.body;
-  console.log('Call to sign up');
-
-  // user.signUp(data, (err, result) => {
+  user.signUp(data, (err, result) => {
     
-
-    // if (err) {
-    //   res.send({ message: err });
-    // } else {
-    //   res.send({ message: 'Đăng ký thành công' });
-    // }
-  // });
+    if (err) {
+      res.send({ message: err });
+    } else {
+      res.send({ message: 'Đăng ký thành công' });
+    }
+  });
 };
 export const secret=(res, req)=>{
     console.log("called to secret");

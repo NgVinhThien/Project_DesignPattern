@@ -6,7 +6,7 @@ import danhmuc from './router/danhmuc.js'
 import hangxe from './router/hangxe.js'
 import _AuthMiddleWare from './common/_AuthMiddleWare.js';
 import user from './router/user.js';
-import { signIn,signUp } from './controller/user.js';
+
 
 const app= express();
 const PORT= process.env.port || 5000;
@@ -20,8 +20,7 @@ app.use(cors());
 app.use('/', danhmuc);
 app.use('/', hangxe);
 app.use('/', xe);
-app.use('/', signUp);
-app.use('/', signIn);
+app.use('/', user);
 // app.use(_AuthMiddleWare.isAuth);
 app.use('/', user);
 app.listen( PORT, ()=>{
