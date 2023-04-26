@@ -3,7 +3,6 @@ import _JWT from '../common/_JWT.js';
 
 
 export const signIn=(req, res)=>{
-    console.log("called to sign in");
     var data= req.body;
     user.signIn(data,async function(result){
         if(result !=null){
@@ -22,17 +21,17 @@ export const signIn=(req, res)=>{
     })
 };
 export const signUp = (req, res) => {
-    console.log('called to sing up');
-
   const data = req.body;
-  user.signUp(data, (err, result) => {
-    
-    if (err) {
-      res.send({ message: err });
-    } else {
-      res.send({ message: 'Đăng ký thành công' });
+  user.findUser(data, function (ressult){
+    console.log(ressult);
+    if(ressult == 0){
+      user.signUp(data, (result)=>{
+        if(result)  res.status(200).send({message: 'Đăng ký thành công'});
+        else res.status(404).send({message: 'Đăng ký không thành công'})
+      })
     }
-  });
+    else res.status(404).send({message: 'Tài khoản đã tồn tại'});
+  }) 
 };
 export const secret=(res, req)=>{
     console.log("called to secret");
