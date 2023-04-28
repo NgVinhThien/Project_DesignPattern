@@ -1,5 +1,5 @@
 import connection from '../common/connect.js';
-
+import bcrypt from 'bcrypt';
 const user= function(user){
     this.id= user.id;
     this.ho_ten= user.ho_ten;
@@ -9,10 +9,19 @@ const user= function(user){
     this.username= user.username;
     this.password= user.password;
 }
+const saltRounds= 10;
+const salt= bcrypt.genSaltSync(saltRounds);
 user.signIn= function(data, result){
-    connection.query("select * from khach_hang where username=? and password=?", [data.username, data.password], (err, results)=>{
-        if(err) throw err; 
-        result(results);
+    connection.query("select * from khach_hang where email=? ", [data.email], (err, results)=>{
+        if(err) throw err;
+        const isValidPassword= bcrypt.compareSync(data.password, results[0]['password']);
+        if( isValidPassword){
+          result(results);
+        }
+        else{
+          result(false);
+        }
+        
     });
 }
 user.findUser= function(data, result){
@@ -23,9 +32,12 @@ user.findUser= function(data, result){
   })
 }
 user.signUp = function(data, result) {
+ 
+  const passwordHashed= bcrypt.hashSync(data.password, salt);
+
   connection.query(
     'insert into khach_hang (ho_ten, dia_chi, sdt, email, username, password) value (?, ?, ?, ?, ?, ?) ',
-    [data.ho_ten, data.dia_chi, data.sdt, data.email, data.username, data.password],
+    [data.ho_ten, data.dia_chi, data.sdt, data.email, data.username, passwordHashed],
     (err, results) => {
       if(err) throw err;
       result(results);

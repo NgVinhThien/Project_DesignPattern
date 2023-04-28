@@ -5,7 +5,7 @@ import _JWT from '../common/_JWT.js';
 export const signIn=(req, res)=>{
     var data= req.body;
     user.signIn(data,async function(result){
-        if(result !=null){
+        if(result != false){
             // const _token= await _JWT.make(result);
             // res.send({user: _token});
             // const objToSend= {
@@ -13,10 +13,10 @@ export const signIn=(req, res)=>{
             //   ho_ten: result.ho_ten,
 
             // }
-            res.status(200).send(JSON.stringify(result));
+            res.status(200).send({message: 'success', data: JSON.stringify(result)});
         }
         else{
-            res.status(404).send();
+            res.status(404).send({message: 'Đăng nhập không thành công'});
         }
     })
 };
