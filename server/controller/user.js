@@ -6,14 +6,14 @@ export const signIn=(req, res)=>{
     var data= req.body;
     user.signIn(data,async function(result){
         if(result != false){
-            // const _token= await _JWT.make(result);
+            const _token= await _JWT.make(result);
             // res.send({user: _token});
             // const objToSend= {
             //   id: result.id, 
             //   ho_ten: result.ho_ten,
 
             // }
-            res.status(200).send({message: 'success', data: JSON.stringify(result)});
+            res.status(200).send({message: 'success', data: JSON.stringify(_token)});
         }
         else{
             res.status(404).send({message: 'Đăng nhập không thành công'});
@@ -27,6 +27,7 @@ export const signUp = (req, res) => {
     if(ressult == 0){
       user.signUp(data, (result)=>{
         if(result)  res.status(200).send({message: 'Đăng ký thành công'});
+        
         else res.status(404).send({message: 'Đăng ký không thành công'})
       })
     }
