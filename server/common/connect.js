@@ -1,10 +1,10 @@
 import mysql from 'mysql';
 
 var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root123",
-  database: "QLBanXe"
+  host: "brcqbyhqtad5pdyqakqn-mysql.services.clever-cloud.com",
+  user: "u6qqbf6dz9fzwj2z",
+  password: "biGVAjyJ1GR4IhNpFeb9",
+  database: "brcqbyhqtad5pdyqakqn"
 });
 
 connection.connect(function(err) {
