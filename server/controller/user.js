@@ -6,17 +6,11 @@ export const signIn=(req, res)=>{
     var data= req.body;
     user.signIn(data,async function(result){
         if(result != false){
-            const _token= await _JWT.make(result);
-            // res.send({user: _token});
-            // const objToSend= {
-            //   id: result.id, 
-            //   ho_ten: result.ho_ten,
-
-            // }
-            res.status(200).send({message: 'success', data: JSON.stringify(_token)});
+          const _token= await _JWT.make(result);
+          res.status(200).send({success: true, token: JSON.stringify(_token), khach_hangs: result});
         }
         else{
-            res.status(404).send({message: 'Đăng nhập không thành công'});
+          res.status(404).send({message: 'Đăng nhập không thành công'});
         }
     })
 };
