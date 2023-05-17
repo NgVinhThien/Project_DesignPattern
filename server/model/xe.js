@@ -10,7 +10,7 @@ const xe = function(xe){
     this.mau = xe.mau;
 }
 xe.getAll= function(result){
-    connection.query("select * from xe", (err, results)=>{
+    connection.query("SELECT xe.*, anh_xe.lien_ket_anh FROM xe LEFT JOIN ( SELECT id_xe, lien_ket_anh FROM anh_xe GROUP BY id_xe ) AS anh_xe ON xe.id = anh_xe.id_xe", (err, results)=>{
         if(err) throw err; 
         result(results);
     });
