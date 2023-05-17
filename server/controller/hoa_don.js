@@ -22,7 +22,7 @@ export const insertHoaDon = async function(req, res) {
     const data = req.body;
 
     const dataInsert= {
-        id_KH: dataKH.data[0]['id'],
+        id_khach_hang: dataKH.data[0]['id'],
         id_xe: data.id_xe,
         ngay_dat: data.ngay_dat,
         ngay_nhan: data.ngay_nhan
@@ -37,4 +37,9 @@ export const insertHoaDon = async function(req, res) {
         res.send({ message: 'Thêm hoá đơn không thành công' });
     }
     })
+}
+export const getIdHoaDon = function(req, res){
+    hoa_don.getAllIdHoaDon(req.params.id,function(response){
+         res.send(response);
+    });
 }

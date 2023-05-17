@@ -19,11 +19,25 @@ hoa_don.getAllHD= function(id_kh,result){
 hoa_don.insert = function(data, result) {
     connection.query(
       'insert into hoa_don (id_khach_hang, id_xe ,ngay_dat,ngay_nhan) value (?, ?, ?, ?) ',
-      [data.id_KH, data.id_xe, data.ngay_dat, data.ngay_nhan],
+      [data.id_khach_hang, data.id_xe, data.ngay_dat, data.ngay_nhan],
       (err, results) => {
         if(err) throw err;
         result(results);
-      })
-}
+      }
+    );
+  };
+hoa_don.getAllIdHoaDon= function(id,result){
+    console.log(id);
+    connection.query("SELECT hoa_don.id_xe, hoa_don.id_khach_hang, hoa_don.ngay_dat, hoa_don.ngay_nhan, xe.ten_xe, xe.gia, xe.mau FROM hoa_don INNER JOIN xe ON hoa_don.id_xe = xe.id WHERE hoa_don.id = ? ", id ,function(err,hoa_don){
+        console.log(err,hoa_don)
+        if(err)
+        {
+            result(null);
+        }else{
+            result(hoa_don);
+        }
+    });
+    
+} 
 
 export default hoa_don;
