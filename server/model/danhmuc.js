@@ -16,7 +16,7 @@ danhmuc.getAll= function(result){
 }
 danhmuc.getAllIdDanhMuc= function(id,result){
     console.log(id);
-    connection.query("SELECT * FROM danh_muc_xe JOIN xe ON danh_muc_xe.id = xe.id_danh_muc_xe WHERE danh_muc_xe.id = ?",id ,function(err,danhmuc){
+    connection.query("SELECT xe.id, xe.ten_xe, xe.gia, xe.mau, anh_xe.lien_ket_anh FROM xe JOIN danh_muc_xe ON xe.id_danh_muc_xe = danh_muc_xe.id JOIN ( SELECT id_xe, lien_ket_anh FROM anh_xe GROUP BY id_xe ) AS anh_xe ON xe.id = anh_xe.id_xe WHERE danh_muc_xe.id = ?",id ,function(err,danhmuc){
         console.log(err,danhmuc)
         if(err)
         {
