@@ -20,7 +20,7 @@ app.use(cors());
 
 app.use('/', hangxe);
 app.use('/', danhmuc);
-app.use('/', xe);
+app.use('/xe', xe);
 app.use('/', user);
 app.use(_AuthMiddleWare.isAuth);
 app.use('/', hoa_don);

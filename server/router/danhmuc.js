@@ -5,5 +5,5 @@ const router= express.Router();
 
 router.get('/danhmuc', getDanhMuc);
 router.get('/danhmuc/:id', getIdDanhMuc);
-// router.post('/add', addBook);
+
 export default router;

@@ -10,10 +10,9 @@ const xe = function(xe){
     this.mau = xe.mau;
 }
 xe.getAll= function(result){
-    connection.query("select id,ten_xe,gia,mau from xe", (err, results)=>{
+    connection.query("select * from xe", (err, results)=>{
         if(err) throw err; 
         result(results);
     });
-    
 }
 export default xe;
