@@ -14,3 +14,13 @@ export const getAllHD= async function(req, res){
         })
     }
 }
+export const insertHoaDon = (req, res) => {
+    const data = req.body;
+    hoa_don.insert(data, (result) => {
+    if (result) {
+    res.send({ message: 'Thêm hoá đơn thành công' });
+    } else {
+    res.send({ message: 'Thêm hoá đơn không thành công' });
+    }
+    })
+}

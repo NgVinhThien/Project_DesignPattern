@@ -36,8 +36,8 @@ user.signUp = function(data, result) {
   const passwordHashed= bcrypt.hashSync(data.password, salt);
 
   connection.query(
-    'insert into khach_hang (ho_ten, dia_chi, sdt, email, username, password) value (?, ?, ?, ?, ?, ?) ',
-    [data.ho_ten, data.dia_chi, data.sdt, data.email, data.username, passwordHashed],
+    'insert into khach_hang (ho_ten, dia_chi, sdt, email, password) value (?, ?, ?, ?, ?) ',
+    [data.ho_ten, data.dia_chi, data.sdt, data.email, passwordHashed],
     (err, results) => {
       if(err) throw err;
       result(results);
