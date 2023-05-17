@@ -14,13 +14,27 @@ export const getAllHD= async function(req, res){
         })
     }
 }
-export const insertHoaDon = (req, res) => {
+export const insertHoaDon = async function(req, res) {
+
+    var tokenKH= req.headers.authorization;
+    const dataKH= await _JWT.check(tokenKH);
+
     const data = req.body;
-    hoa_don.insert(data, (result) => {
+
+    const dataInsert= {
+        id_KH: dataKH.data[0]['id'],
+        id_xe: data.id_xe,
+        ngay_dat: data.ngay_dat,
+        ngay_nhan: data.ngay_nhan
+    }
+
+
+    console.log(dataInsert);
+    hoa_don.insert(dataInsert, (result) => {
     if (result) {
-    res.send({ message: 'Thêm hoá đơn thành công' });
+        res.send({ message: 'Thêm hoá đơn thành công' });
     } else {
-    res.send({ message: 'Thêm hoá đơn không thành công' });
+        res.send({ message: 'Thêm hoá đơn không thành công' });
     }
     })
 }

@@ -18,8 +18,8 @@ hoa_don.getAllHD= function(id_kh,result){
 
 hoa_don.insert = function(data, result) {
     connection.query(
-      'insert into khach_hang (id_khach_hang, id_xe ,ngay_dat,ngay_nhan) value (?, ?, ?, ?) ',
-      [data.id_khach_hang, data.id_xe, data.ngay_dat, data.ngay_nhan],
+      'insert into hoa_don (id_khach_hang, id_xe ,ngay_dat,ngay_nhan) value (?, ?, ?, ?) ',
+      [data.id_KH, data.id_xe, data.ngay_dat, data.ngay_nhan],
       (err, results) => {
         if(err) throw err;
         result(results);

@@ -10,7 +10,7 @@ export const signIn=(req, res)=>{
           res.status(200).send({success: true, token: JSON.stringify(_token), khach_hangs: result});
         }
         else{
-          res.status(404).send({message: 'Đăng nhập không thành công'});
+          res.status(404).json({message: 'Đăng nhập không thành công'});
         }
     })
 };

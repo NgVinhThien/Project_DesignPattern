@@ -14,14 +14,18 @@ const salt= bcrypt.genSaltSync(saltRounds);
 user.signIn= function(data, result){
     connection.query("select * from khach_hang where email=? ", [data.email], (err, results)=>{
         if(err) throw err;
-        const isValidPassword= bcrypt.compareSync(data.password, results[0]['password']);
-        if( isValidPassword){
-          result(results);
+        if(results.length !=0){
+          const isValidPassword= bcrypt.compareSync(data.password, results[0]['password']);
+          if( isValidPassword){
+            result(results);
+          }
+          else{
+            result(false);
+          }
         }
         else{
           result(false);
-        }
-        
+        }  
     });
 }
 user.findUser= function(data, result){
