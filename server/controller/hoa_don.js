@@ -40,6 +40,6 @@ export const insertHoaDon = async function(req, res) {
 }
 export const getIdHoaDon = function(req, res){
     hoa_don.getAllIdHoaDon(req.params.id,function(response){
-         res.send(response);
+         res.status(200).json(response);
     });
 }
