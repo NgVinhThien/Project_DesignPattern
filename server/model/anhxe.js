@@ -5,9 +5,10 @@ const anhxe = function(anhxe){
     this.id_xe = anhxe.id_xe
     this.lien_ket_anh = anhxe.lien_ket_anh
 }
+
 anhxe.getAllIdAnhXe= function(id,result){
     console.log(id);
-    connection.query("SELECT * from anh_xe where id_xe = ?", id ,function(err,anhxe){
+    connection.query("SELECT * FROM anh_xe WHERE id_xe = ? ", id ,function(err,anhxe){
         console.log(err,anhxe)
         if(err)
         {

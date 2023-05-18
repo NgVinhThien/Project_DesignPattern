@@ -16,7 +16,7 @@ hangxe.getAll= function(result){
     
 }
 hangxe.getAllIdHangXe= function(id,result){
-    connection.query("SELECT xe.id, xe.ten_xe, xe.gia, xe.mau, anh_xe.lien_ket_anh  FROM xe JOIN hang_xe ON xe.id_hang_xe = hang_xe.id  JOIN ( SELECT id_xe, lien_ket_anh  FROM anh_xe  GROUP BY id_xe) AS anh_xe ON xe.id = anh_xe.id_xe WHERE hang_xe.id = ?",id ,function(err,hangxe){
+    connection.query("SELECT xe.id, xe.ten_xe, xe.gia, xe.mau, xe.mota , anh_xe.lien_ket_anh  FROM xe JOIN hang_xe ON xe.id_hang_xe = hang_xe.id  JOIN ( SELECT id_xe, lien_ket_anh  FROM anh_xe  GROUP BY id_xe) AS anh_xe ON xe.id = anh_xe.id_xe WHERE hang_xe.id = ?",id ,function(err,hangxe){
         console.log(err,hangxe)
         if(err)
         {
