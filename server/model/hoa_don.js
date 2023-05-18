@@ -26,9 +26,10 @@ hoa_don.insert = function(data, result) {
       }
     );
   };
+  
 hoa_don.getAllIdHoaDon= function(id,result){
     console.log(id);
-    connection.query("SELECT hoa_don.id_xe, hoa_don.id_khach_hang, hoa_don.ngay_dat, hoa_don.ngay_nhan, xe.ten_xe, xe.gia, xe.mau FROM hoa_don INNER JOIN xe ON hoa_don.id_xe = xe.id WHERE hoa_don.id = ? ", id ,function(err,hoa_don){
+    connection.query("SELECT FROM hoa_don INNER JOIN xe ON hoa_don.id_xe = xe.id WHERE hoa_don.id = ? ", id ,function(err,hoa_don){
         console.log(err,hoa_don)
         if(err)
         {
