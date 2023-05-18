@@ -10,7 +10,7 @@ export const getAllHD= async function(req, res){
     if(dataKH != null){
         const id_KH= dataKH.data[0]['id'];
         hoa_don.getAllHD(id_KH, (result)=>{
-            res.send(result);   
+        res.send({data: result});   
         })
     }
 }
