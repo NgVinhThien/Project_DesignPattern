@@ -45,12 +45,6 @@ user.signUp = function(data, result) {
     (err, results) => {
       if(err) throw err;
       result(results);
-
-      // if (err) {
-      //   result(err, null);
-      // } else {
-      //   result(null, res);
-      // }
     }
   );
 };

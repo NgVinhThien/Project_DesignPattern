@@ -1,11 +1,10 @@
 import express from 'express';
 import _jwt from '../common/_JWT.js'
-import {signIn, secret,signUp} from '../controller/user.js';
+import {signIn,signUp} from '../controller/user.js';
 const router= express.Router();
 
 router.post('/signIn', signIn);
 router.post('/signUp', signUp);
-router.get('/secret', secret);
 
 router.get('/token', async function(req, res){
     var user= {

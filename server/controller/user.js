@@ -20,17 +20,15 @@ export const signUp = (req, res) => {
     console.log(ressult);
     if(ressult == 0){
       user.signUp(data, (result)=>{
-        if(result)  res.status(200).send({message: 'Đăng ký thành công'});
+        if(result)  res.status(200).json({success: true, message: 'Đăng ký thành công'});
         
-        else res.status(404).send({message: 'Đăng ký không thành công'})
+        else res.status(404).json({success: false, message: 'Đăng ký không thành công'})
       })
     }
-    else res.status(404).send({message: 'Tài khoản đã tồn tại'});
+    else res.status(404).json({success: false, message: 'Tài khoản đã tồn tại'});
   }) 
 };
-export const secret=(res, req)=>{
-    console.log("called to secret");
-};
+
 
 
 
