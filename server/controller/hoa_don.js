@@ -31,11 +31,14 @@ export const insertHoaDon = async function(req, res) {
 
     console.log(dataInsert);
     hoa_don.insert(dataInsert, (result) => {
-    if (result) {
-        res.status(200).json({success: true,message: 'Thêm hoá đơn thành công' });
-    } else {
-        res.status(404).json({success: false,message: 'Thêm hoá đơn thành công' });
-    }
+    
+        const affectRow= result.affectedRows;
+        console.log(affectRow);
+        if (affectRow>=1) {
+            res.status(200).json({success: true,message: 'Thêm hoá đơn thành công' });
+        } else {
+            res.status(404).json({success: false,message: 'Thêm hoá đơn không thành công' });
+        }
     })
 }
 export const getIdHoaDon = function(req, res){
