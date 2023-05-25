@@ -4,7 +4,6 @@ const router= express.Router();
 
 router.get('/hoadon', getAllHD);
 router.post('/themhoadon',insertHoaDon);
-
 router.get('/hoadon/:id', getIdHoaDon);
 
 export default router;
