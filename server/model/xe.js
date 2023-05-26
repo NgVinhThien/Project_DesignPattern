@@ -15,4 +15,11 @@ xe.getAll= function(result){
         result(results);
     });
 }
+xe.getDetailXeById= function(id_xe, result){
+    // console.log(">>>Check id xe in model", id_xe);
+    connection.query("SELECT xe.*, anh_xe.lien_ket_anh FROM xe LEFT JOIN ( SELECT id_xe, lien_ket_anh FROM anh_xe GROUP BY id_xe, lien_ket_anh) AS anh_xe ON xe.id = anh_xe.id_xe  where xe.id=? limit 1", id_xe, (err, results)=>{
+        if(err) throw err; 
+        result(results);
+    });
+}
 export default xe;

@@ -17,26 +17,73 @@
       
       <div style="padding-left:16px">
         <div class="w3-container">
-          <h2>Danh mục</h2>
-          <p>If you different hover colors, add w3-hover-<em>color</em> classes to each tr element:</p>
-        
+          <h2>Danh sách xe</h2>        
           <table class="w3-table-all">
             <thead>
               <tr class="w3-light-grey w3-hover-green">
                 <th>Id</th>
-                <th>Tên danh mục</th>
-                <th>Link ảnh đại diện</th>
+                <th>Tên xe</th>
+                <th>Giá bán</th>
+                <th>Hoạt động</th>
               </tr>
             </thead>
-            <% for(let i=0; i<dataDanhMuc.length; i++) { %>
+            <% for(let i=0; i<dataXe.length; i++) { %>
               <tr class="w3-hover-text-green">
-                <td><%= dataDanhMuc[i].id%></td>
-                <td><%= dataDanhMuc[i].ten_danh_muc%></td>
-                <td><%= dataDanhMuc[i].anh_dai_dien%></td>
+                <td><%= dataXe[i].id%></td>
+                <td><%= dataXe[i].ten_xe%></td>
+                <td><%= dataXe[i].gia%></td>
+                <td>
+                  <a class="link-button details-button" href="/web/details/xe/<%= dataXe[i].id%>">Details</a>
+                  <a class="link-button update-button" href="#">Update</a>
+                  <a class="link-button delete-button" href="#">Delete</a>
+                </td>
               </tr>
             <% } %>
           </table>
         </div>
       </div>
+      <!-- <div class="container"> -->
+        <form action="action_page.php" class="create-new-form">
+          <div class="row">
+            <div class="col-25">
+              <label for="fname">First Name</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="fname" name="firstname" placeholder="Your name..">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="lname">Last Name</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="country">Country</label>
+            </div>
+            <div class="col-75">
+              <select id="country" name="country">
+                <option value="australia">Australia</option>
+                <option value="canada">Canada</option>
+                <option value="usa">USA</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="subject">Subject</label>
+            </div>
+            <div class="col-75">
+              <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <input type="button" value="Submit">
+          </div>
+        </form>
+      <!-- </div> -->
 </body>
 </html>
