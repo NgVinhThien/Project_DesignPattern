@@ -3,7 +3,6 @@ import configViewEngine from './configs/viewEngine.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import xe from './router/xe.js'
-import danhmuc from './router/danhmuc.js'
 import hangxe from './router/hangxe.js'
 import anhxe from './router/anhxe.js'
 import _AuthMiddleWare from './common/_AuthMiddleWare.js';
@@ -25,7 +24,6 @@ configViewEngine(app);
 app.use('/', web);
 app.use('/', anhxe);
 app.use('/', hangxe);
-app.use('/', danhmuc);
 app.use('/xe', xe);
 app.use('/', user);
 app.use(_AuthMiddleWare.isAuth);
