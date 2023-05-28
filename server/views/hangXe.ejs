@@ -3,9 +3,101 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/_css/homePage.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>NODE JS</title>
 </head>
 <body>
-    <%= idHangXe %>
+<div class="topnav">
+    <a class="active" href="/web/home">Home</a>
+    <div class="dropdown">
+      <a href="#" class="dropbtn">Danh mục</a>
+      <div class="dropdown-content">
+          <% for (let i = 0; i < dataDanhmuc.length; i++) { %>
+              <a href="/web/danhmuc/<%= dataDanhmuc[i].id%>"><%= dataDanhmuc[i].ten_danh_muc %></a>
+          <% } %>
+      </div>
+    </div>
+    <div class="dropdown">
+      <a href="#" class="dropbtn">Hãng xe</a>
+      <div class="dropdown-content">
+          <% for (let i = 0; i < dataHangxe.length; i++) { %>
+              <a href="/web/hangxe/<%= dataHangxe[i].id%>"><%= dataHangxe[i].ten_hang_xe %></a>
+          <% } %>
+      </div>
+  </div>  
+    <a href="#about">About</a>
+</div>
+      
+      <div style="padding-left:16px">
+        <div class="w3-container">
+          <h2>Danh sách xe</h2>        
+          <table class="w3-table-all">
+            <thead>
+              <tr class="w3-light-grey w3-hover-green">
+                <th>Id</th>
+                <th>Tên xe</th>
+                <th>Giá bán</th>
+                <th>Hoạt động</th>
+              </tr>
+            </thead>
+            <% for(let i=0; i<idHangXe.length; i++) { %>
+              <tr class="w3-hover-text-green">
+                <td><%= idHangXe[i].id%></td>
+                <td><%= idHangXe[i].ten_xe%></td>
+                <td><%= idHangXe[i].gia%></td>
+                <td>
+                  <a class="link-button details-button" href="/web/details/xe/<%= idHangXe[i].id%>">Details</a>
+                  <a class="link-button update-button" href="#">Update</a>
+                  <a class="link-button delete-button" href="#">Delete</a>
+                </td>
+              </tr>
+            <% } %>
+          </table>
+        </div>
+      </div>
+      <!-- <div class="container"> -->
+        <form action="action_page.php" class="create-new-form">
+          <div class="row">
+            <div class="col-25">
+              <label for="fname">First Name</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="fname" name="firstname" placeholder="Your name..">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="lname">Last Name</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="country">Country</label>
+            </div>
+            <div class="col-75">
+              <select id="country" name="country">
+                <option value="australia">Australia</option>
+                <option value="canada">Canada</option>
+                <option value="usa">USA</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="subject">Subject</label>
+            </div>
+            <div class="col-75">
+              <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <input type="button" value="Submit">
+          </div>
+        </form>
+      <!-- </div> -->
 </body>
 </html>

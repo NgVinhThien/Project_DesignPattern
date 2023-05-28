@@ -45,3 +45,46 @@ class DanhMucProxy {
 }
 
 export { DanhMuc, DanhMucProxy };
+class DanhMuc1 {
+  constructor(danhMuc) {
+    this.id = danhMuc.id;
+    this.ten_danh_muc = danhMuc.ten_danh_muc;
+    this.anh_dai_dien = danhMuc.anh_dai_dien;
+    // ...
+  }
+
+  static addDanhMuc(danhMucData, callback) {
+    const { ten_danh_muc, anh_dai_dien } = danhMucData;
+
+    const query = 'INSERT INTO danh_muc_xe (ten_danh_muc, anh_dai_dien) VALUES (?, ?)';
+    connection.query(query, [ten_danh_muc, anh_dai_dien], (err, result) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        const danhMuc = new DanhMuc1({
+          id: result.insertId,
+          ten_danh_muc: ten_danh_muc,
+          anh_dai_dien: anh_dai_dien,
+        });
+        callback(null, danhMuc);
+      }
+    });
+  }
+
+  // ...
+}
+
+class DanhMucAdapter {
+  addDanhMuc(danhMucData, callback) {
+    DanhMuc1.addDanhMuc(danhMucData, (err, danhMuc) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, danhMuc);
+      }
+    });
+  }
+}
+
+export { DanhMuc1, DanhMucAdapter };
+

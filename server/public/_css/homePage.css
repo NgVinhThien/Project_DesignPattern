@@ -146,3 +146,14 @@ input[type=button] {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+.add-button {
+  float: right;
+  margin-right: 20px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}

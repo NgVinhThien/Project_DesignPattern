@@ -3,9 +3,7 @@ import configViewEngine from './configs/viewEngine.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import xe from './router/xe.js'
-import hangxe from './router/hangxe.js'
 import anhxe from './router/anhxe.js'
-import _AuthMiddleWare from './common/_AuthMiddleWare.js';
 import user from './router/user.js';
 import hoa_don from './router/hoa_don.js';
 import web from './router/web.js'
@@ -23,10 +21,8 @@ app.use(cors());
 configViewEngine(app);
 app.use('/', web);
 app.use('/', anhxe);
-app.use('/', hangxe);
 app.use('/xe', xe);
 app.use('/', user);
-app.use(_AuthMiddleWare.isAuth);
 app.use('/', hoa_don);
 
 app.listen( PORT, ()=>{

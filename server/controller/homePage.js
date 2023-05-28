@@ -1,20 +1,12 @@
-import { DanhMucProxy } from '../model/danhmuc.js';
+import { DanhMucProxy, DanhMucAdapter } from '../model/danhmuc.js';
 import xe from "../model/xe.js";
-import hangxe from '../model/hangxe.js';
+import { HangXeProxy } from '../model/hangxe.js';
 export const getHomepage = (req, res) => {
     let row;
-    let hangxeData;
-
     xe.getAll((result) => {
         row = result;
-
-
-            hangxe.getAll((hangxeResult) => {
-                hangxeData = hangxeResult;
-
-                return res.render('homePage.ejs', { dataXe: row, dataHangxe: hangxeData });
+                return res.render('homePage.ejs', { dataXe: row });
             });
-    });
 };
 export const getDetailXe= (req, res)=>{
     
@@ -35,7 +27,7 @@ const decorator = (originalFn) => {
         let danhmucXe = result;
     
         DanhMucProxy.getAll((danhmucData) => {
-          hangxe.getAll((hangxeData) => {
+          HangXeProxy.getAll((hangxeData) => {
             const data = {
               danhmucXe: danhmucXe,
               dataDanhmuc: danhmucData,
@@ -63,12 +55,53 @@ const decorator = (originalFn) => {
   
 
 
-export const getAllIdHangXe= (req, res)=>{
-    
-    let id= req.params.id;
-    hangxe.getAllIdHangXe(id, (result)=> {
-        return res.render('hangXe.ejs', {idHangXe: JSON.stringify(result)});
-    })
-   
-}
+  const decorator1 = (originalFn) => {
+    return (req, res) => {
+      let id = req.params.id;
+  
+      HangXeProxy.getAllIdHangXe(id, (result) => {
+        let hangxe = result;
+  
+        DanhMucProxy.getAll((danhmucData) => {
+          HangXeProxy.getAll((hangxeData) => {
+            const data = {
+              idHangXe: hangxe,
+              dataDanhmuc: danhmucData,
+              dataHangxe: hangxeData
+            };
+  
+            originalFn(req, res, data);
+          });
+        });
+      });
+    };
+  };
+  
+  const getAllIdHangXe = (req, res, data) => {
+    res.render('hangXe.ejs', data);
+  };
+  
+  const decoratedGetAllIdHangXe = decorator1(getAllIdHangXe);
+  
+export { decoratedGetAllIdHangXe as getAllIdHangXe };
+  
+const addDanhMuc = (req, res) => {
+  const danhMucData = {
+    ten_danh_muc: req.body.ten_danh_muc,
+    anh_dai_dien: req.body.anh_dai_dien,
+  };
+
+  const danhMucAdapter = new DanhMucAdapter();
+  danhMucAdapter.addDanhMuc(danhMucData, (err, danhMuc) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Lỗi khi thêm danh mục.');
+    } else {
+      res.redirect('/web/danhmuc/' + danhMuc.id);
+    }
+  });
+};
+
+export { addDanhMuc };
+
 
