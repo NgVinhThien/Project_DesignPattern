@@ -2,7 +2,6 @@ import { DanhMucProxy, DanhMucAdapter } from '../model/danhmuc.js';
 import xe from "../model/xe.js";
 import { HangXeProxy } from '../model/hangxe.js';
 export const getHomepage = (req, res) => {
-    let row;
     xe.getAll((result) => {
             const query= queryData(1);
             // console.log(query.getData());
