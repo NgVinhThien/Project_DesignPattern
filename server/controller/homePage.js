@@ -1,12 +1,15 @@
 import danhmuc from "../model/danhmuc.js";
 import xe from "../model/xe.js";
+import {queryData} from "../model/factoryPattern.js"
 export const getHomepage= (req, res)=>{
-    let row;
-    xe.getAll((result)=>{
-        row= result;
-        // console.log("Check row: ", row);
-        return res.render('homePage.ejs', {dataXe: row});
-    });
+    const query= queryData(1);
+    // console.log(query.getData());
+    console.log(">>>Check Factory Pattern:", typeof(query.getData()));
+    // xe.getAll((result)=>{
+    //     row= result;
+    //     // console.log("Check row: ", row);
+    //     return res.render('homePage.ejs', {dataXe: row});
+    // });
 }
 export const getDetailXe= (req, res)=>{
     

@@ -46,26 +46,26 @@
         <form action="action_page.php" class="create-new-form">
           <div class="row">
             <div class="col-25">
-              <label for="fname">First Name</label>
+              <label for="fname">Tên xe</label>
             </div>
             <div class="col-75">
-              <input type="text" id="fname" name="firstname" placeholder="Your name..">
+              <input type="text" id="fname" name="ten_xe" placeholder="Tên xe...">
             </div>
           </div>
           <div class="row">
             <div class="col-25">
-              <label for="lname">Last Name</label>
+              <label for="lname">Giá bán</label>
             </div>
             <div class="col-75">
-              <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+              <input type="text" id="gia" name="lastname" placeholder="Giá bán...">
             </div>
           </div>
           <div class="row">
             <div class="col-25">
-              <label for="country">Country</label>
+              <label for="country">Danh mục</label>
             </div>
             <div class="col-75">
-              <select id="country" name="country">
+              <select id="country" name="id_danh_muc_xe">
                 <option value="australia">Australia</option>
                 <option value="canada">Canada</option>
                 <option value="usa">USA</option>
@@ -74,10 +74,22 @@
           </div>
           <div class="row">
             <div class="col-25">
-              <label for="subject">Subject</label>
+              <label for="country">Hãng xe</label>
             </div>
             <div class="col-75">
-              <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+              <select id="country" name="id_hang_xe">
+                <option value="australia">Australia</option>
+                <option value="canada">Canada</option>
+                <option value="usa">USA</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="subject">Mô tả</label>
+            </div>
+            <div class="col-75">
+              <textarea id="subject" name="subject" placeholder="Viết mô tả về xe..." style="height:200px"></textarea>
             </div>
           </div>
           <div class="row">
