@@ -13,20 +13,21 @@
     <div class="dropdown">
       <a href="#" class="dropbtn">Danh mục</a>
       <div class="dropdown-content">
-              <a href="#">gẻger</a>
+          <% for (let i = 0; i < dataDanhmuc.length; i++) { %>
+              <a href="/web/danhmuc/<%= dataDanhmuc[i].id%>"><%= dataDanhmuc[i].ten_danh_muc %></a>
+          <% } %>
       </div>
     </div>
     <div class="dropdown">
       <a href="#" class="dropbtn">Hãng xe</a>
       <div class="dropdown-content">
-   
-              <a href="#">#</a>
-
+          <% for (let i = 0; i < dataHangxe.length; i++) { %>
+              <a href="/web/hangxe/<%= dataHangxe[i].id%>"><%= dataHangxe[i].ten_hang_xe %></a>
+          <% } %>
       </div>
   </div>  
     <a href="#about">About</a>
 </div>
-
       
       <div style="padding-left:16px">
         <div class="w3-container">
@@ -40,13 +41,13 @@
                 <th>Hoạt động</th>
               </tr>
             </thead>
-            <% for(let i=0; i<dataXe.length; i++) { %>
+            <% for(let i=0; i<idHangXe.length; i++) { %>
               <tr class="w3-hover-text-green">
-                <td><%= dataXe[i].id%></td>
-                <td><%= dataXe[i].ten_xe%></td>
-                <td><%= dataXe[i].gia%></td>
+                <td><%= idHangXe[i].id%></td>
+                <td><%= idHangXe[i].ten_xe%></td>
+                <td><%= idHangXe[i].gia%></td>
                 <td>
-                  <a class="link-button details-button" href="/web/details/xe/<%= dataXe[i].id%>">Details</a>
+                  <a class="link-button details-button" href="/web/details/xe/<%= idHangXe[i].id%>">Details</a>
                   <a class="link-button update-button" href="#">Update</a>
                   <a class="link-button delete-button" href="#">Delete</a>
                 </td>
@@ -59,26 +60,26 @@
         <form action="action_page.php" class="create-new-form">
           <div class="row">
             <div class="col-25">
-              <label for="fname">Tên xe</label>
+              <label for="fname">First Name</label>
             </div>
             <div class="col-75">
-              <input type="text" id="fname" name="ten_xe" placeholder="Tên xe...">
+              <input type="text" id="fname" name="firstname" placeholder="Your name..">
             </div>
           </div>
           <div class="row">
             <div class="col-25">
-              <label for="lname">Giá bán</label>
+              <label for="lname">Last Name</label>
             </div>
             <div class="col-75">
-              <input type="text" id="gia" name="lastname" placeholder="Giá bán...">
+              <input type="text" id="lname" name="lastname" placeholder="Your last name..">
             </div>
           </div>
           <div class="row">
             <div class="col-25">
-              <label for="country">Danh mục</label>
+              <label for="country">Country</label>
             </div>
             <div class="col-75">
-              <select id="country" name="id_danh_muc_xe">
+              <select id="country" name="country">
                 <option value="australia">Australia</option>
                 <option value="canada">Canada</option>
                 <option value="usa">USA</option>
@@ -87,22 +88,10 @@
           </div>
           <div class="row">
             <div class="col-25">
-              <label for="country">Hãng xe</label>
+              <label for="subject">Subject</label>
             </div>
             <div class="col-75">
-              <select id="country" name="id_hang_xe">
-                <option value="australia">Australia</option>
-                <option value="canada">Canada</option>
-                <option value="usa">USA</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-25">
-              <label for="subject">Mô tả</label>
-            </div>
-            <div class="col-75">
-              <textarea id="subject" name="subject" placeholder="Viết mô tả về xe..." style="height:200px"></textarea>
+              <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
             </div>
           </div>
           <div class="row">
