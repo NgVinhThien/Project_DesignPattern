@@ -1,16 +1,20 @@
 import { DanhMucProxy, DanhMucAdapter } from '../model/danhmuc.js';
 import xe from "../model/xe.js";
 import { HangXeProxy } from '../model/hangxe.js';
-export const getHomepage = (req, res) => {
-    xe.getAll((result) => {
-            const query= queryData(1);
-            // console.log(query.getData());
-            console.log(">>>Check Factory Pattern:", typeof(query.getData()));
-            // xe.getAll((result)=>{
-            //     row= result;
-            //     // console.log("Check row: ", row);
-            //     return res.render('homePage.ejs', {dataXe: row});
-            });
+import {queryData} from '../model/factoryPattern.js'
+export const getHomepage = async (req, res) => {
+
+  const queryXe=  queryData('xe');
+  const dataXe= await queryXe.getData();
+
+  const queryDanhMuc= queryData('danhmuc');
+  const dataDM= await queryDanhMuc.getData();
+
+  const queryHangXe= queryData('hangxe');
+  const dataHX= await queryHangXe.getData();
+
+  // console.log("Check factory", data);
+  return res.render('homePage.ejs', {dataXe: dataXe, dataDM: dataDM, dataHX: dataHX});
 };
 export const getDetailXe= (req, res)=>{
     

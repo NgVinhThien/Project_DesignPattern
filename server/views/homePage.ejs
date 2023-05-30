@@ -79,9 +79,9 @@
             </div>
             <div class="col-75">
               <select id="country" name="id_danh_muc_xe">
-                <option value="australia">Australia</option>
-                <option value="canada">Canada</option>
-                <option value="usa">USA</option>
+                <% for (let i=0; i<dataDM.length; i++) { %>
+                  <option value="<%= dataDM[i].id %>" ><%= dataDM[i].ten_danh_muc%></option>
+                <% } %>
               </select>
             </div>
           </div>
@@ -91,9 +91,9 @@
             </div>
             <div class="col-75">
               <select id="country" name="id_hang_xe">
-                <option value="australia">Australia</option>
-                <option value="canada">Canada</option>
-                <option value="usa">USA</option>
+                <% for (let j=0; j< dataHX.length; j++) { %>
+                  <option value="<%= dataHX[j].id%>"><%= dataHX[j].ten_hang_xe%></option>
+                <% } %>
               </select>
             </div>
           </div>
