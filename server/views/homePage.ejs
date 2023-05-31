@@ -13,7 +13,9 @@
     <div class="dropdown">
       <a href="#" class="dropbtn">Danh mục</a>
       <div class="dropdown-content">
-              <a href="#">gẻger</a>
+        <% for (let i=0; i<dataDM.length; i++) { %>
+              <a href="/web/danhmuc/<%= dataDM[i].id %>"><%= dataDM[i].ten_danh_muc%></a>
+        <% } %>
       </div>
     </div>
     <div class="dropdown">
