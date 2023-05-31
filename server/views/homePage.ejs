@@ -21,9 +21,9 @@
     <div class="dropdown">
       <a href="#" class="dropbtn">Hãng xe</a>
       <div class="dropdown-content">
-   
-              <a href="#">#</a>
-
+        <% for (let j=0; j< dataHX.length; j++) { %>
+          <a href="/web/hangxe/<%= dataHX[j].id %>"><%= dataHX[j].ten_hang_xe%></a>
+    <% } %>
       </div>
   </div>  
     <a href="#about">About</a>
