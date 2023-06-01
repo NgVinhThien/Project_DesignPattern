@@ -13,7 +13,6 @@ export const getHomepage = async (req, res) => {
   const queryHangXe= queryData('hangxe');
   const dataHX= await queryHangXe.getData();
 
-  // console.log("Check factory", data);
   return res.render('homePage.ejs', {dataXe: dataXe, dataDM: dataDM, dataHX: dataHX});
 };
 export const getDetailXe= (req, res)=>{
@@ -26,7 +25,11 @@ export const getDetailXe= (req, res)=>{
     })
    
 }
+export const addXe= (req, res)=>{
+  console.log(">>>Check post method",req.body);
+  return res.redirect('/web/home')
 
+}
 const decorator = (originalFn) => {
     return (req, res) => {
       let id = req.params.id;

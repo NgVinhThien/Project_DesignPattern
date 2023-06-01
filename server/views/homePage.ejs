@@ -58,7 +58,7 @@
         </div>
       </div>
       <!-- <div class="container"> -->
-        <form action="action_page.php" class="create-new-form">
+        <form action="http://localhost:5000/web/xe/add" class="create-new-form" method="post">
           <div class="row">
             <div class="col-25">
               <label for="fname">Tên xe</label>
@@ -72,7 +72,7 @@
               <label for="lname">Giá bán</label>
             </div>
             <div class="col-75">
-              <input type="text" id="gia" name="lastname" placeholder="Giá bán...">
+              <input type="text" id="lname" name="gia_ban" placeholder="Giá bán...">
             </div>
           </div>
           <div class="row">
@@ -82,7 +82,7 @@
             <div class="col-75">
               <select id="country" name="id_danh_muc_xe">
                 <% for (let i=0; i<dataDM.length; i++) { %>
-                  <option value="<%= dataDM[i].id %>" ><%= dataDM[i].ten_danh_muc%></option>
+                  <option value="<%= dataDM[i].id %>"><%= dataDM[i].ten_danh_muc%></option>
                 <% } %>
               </select>
             </div>
@@ -104,11 +104,13 @@
               <label for="subject">Mô tả</label>
             </div>
             <div class="col-75">
-              <textarea id="subject" name="subject" placeholder="Viết mô tả về xe..." style="height:200px"></textarea>
+              <textarea id="subject" name="mo_ta" placeholder="Viết mô tả về xe..." style="height:200px"></textarea>
             </div>
           </div>
           <div class="row">
-            <input type="button" value="Submit">
+            <!-- <input type="button" value="Submit"> -->
+            <button type="submit" class="submitBtn">Thêm</button>
+            <!-- button button1 -->
           </div>
         </form>
       <!-- </div> -->
