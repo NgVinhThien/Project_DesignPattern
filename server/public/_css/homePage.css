@@ -158,6 +158,10 @@ input[type=button],
   cursor: pointer;
   border-radius: 4px;
 }
+.thumbnail-img {
+  width: 10%; 
+  object-fit: cover; 
+}
 
 
 
