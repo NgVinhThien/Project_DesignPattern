@@ -70,7 +70,16 @@ class DanhMuc1 {
       }
     });
   }
-
+  static deleteDanhMuc(id, callback) {
+    const query = 'DELETE FROM danh_muc_xe WHERE id = ?';
+    connection.query(query, [id], (err, result) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, result.affectedRows > 0);
+      }
+    });
+  }
   // ...
 }
 
@@ -81,6 +90,15 @@ class DanhMucAdapter {
         callback(err, null);
       } else {
         callback(null, danhMuc);
+      }
+    });
+  }
+  deleteDanhMuc(id, callback) {
+    DanhMuc1.deleteDanhMuc(id, (err, isDeleted) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, isDeleted);
       }
     });
   }

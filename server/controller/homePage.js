@@ -54,13 +54,15 @@ const decorator = (originalFn) => {
   const getAllIdDanhMuc = (req, res, data) => {
     res.render('danhmucXe.ejs', data);
   };
-  
+  const getAlldanhmuc = (req, res, data) => {
+    res.render('dsDanhmuc.ejs', data);
+  };
 
   const decoratedGetAllIdDanhMuc = decorator(getAllIdDanhMuc);
-  
+  const decoratedGetAllDanhMuc = decorator(getAlldanhmuc);
  
   export { decoratedGetAllIdDanhMuc as getAllIdDanhMuc };
-  
+  export { decoratedGetAllDanhMuc as getAlldanhmuc };
 
 
   const decorator1 = (originalFn) => {
@@ -105,11 +107,30 @@ const addDanhMuc = (req, res) => {
       console.error(err);
       res.status(500).send('Lỗi khi thêm danh mục.');
     } else {
-      res.redirect('/web/danhmuc/' + danhMuc.id);
+      res.redirect('/web/danhmuc');
     }
   });
 };
 
 export { addDanhMuc };
+const deleteDanhMuc = (req, res) => {
+  const danhMucId = req.params.id;
+
+  const danhMucAdapter = new DanhMucAdapter();
+  danhMucAdapter.deleteDanhMuc(danhMucId, (err, isDeleted) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Lỗi khi xoá danh mục.');
+    } else {
+      if (isDeleted) {
+        res.redirect('/web/danhmuc');
+      } else {
+        res.status(404).send('Không tìm thấy danh mục.');
+      }
+    }
+  });
+};
+
+export { deleteDanhMuc };
 
 

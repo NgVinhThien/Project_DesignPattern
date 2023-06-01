@@ -13,21 +13,16 @@
     <div class="dropdown">
       <a href="#" class="dropbtn">Danh mục</a>
       <div class="dropdown-content">
+        <a href="/web/danhmuc">Danh mục</a>
           <% for (let i = 0; i < dataDanhmuc.length; i++) { %>
               <a href="/web/danhmuc/<%= dataDanhmuc[i].id%>"><%= dataDanhmuc[i].ten_danh_muc %></a>
           <% } %>
       </div>
     </div>
     <div class="dropdown">
-      <a href="#" class="dropbtn">Hãng xe</a>
-      <div class="dropdown-content">
-          <% for (let i = 0; i < dataHangxe.length; i++) { %>
-              <a href="/web/hangxe/<%= dataHangxe[i].id%>"><%= dataHangxe[i].ten_hang_xe %></a>
-          <% } %>
-      </div>
-  </div>  
+      <a href="/web/hangxe/1" class="dropbtn">Hãng xe</a>
+  </div> 
     <a href="#about">About</a>
-    <button id="addDanhMucButton" class="add-button">Thêm danh mục</button>
 </div>
       
       <div style="padding-left:16px">
@@ -58,38 +53,6 @@
         </div>
       </div>
   
-      <!-- </div> -->
-      <div id="addDanhMucFormWrapper" class="hidden">
-        <div id="addDanhMucForm">
-          <h3>Thêm danh mục</h3>
-          <form id="danhMucForm" method="POST" action="/web/danhmuc/add">
-            <label for="tenDanhMuc">Tên danh mục:</label>
-            <input type="text" id="tenDanhMuc" name="ten_danh_muc" required>
-            <br>
-            <label for="anhDaiDien">Ảnh đại diện:</label>
-            <input type="text" id="anhDaiDien" name="anh_dai_dien" required>
-            <br>
-            <button type="submit">Lưu</button>
-          </form>
-        </div>
-      </div>
-      
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const addDanhMucButton = document.getElementById('addDanhMucButton');
-          const addDanhMucFormWrapper = document.getElementById('addDanhMucFormWrapper');
-      
-          addDanhMucButton.addEventListener('click', function() {
-            addDanhMucFormWrapper.classList.toggle('hidden');
-          });
-        });
-      </script>
-      
-      <style>
-        .hidden {
-          display: none;
-        }
-      </style>
       
 
                
