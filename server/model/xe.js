@@ -22,4 +22,14 @@ xe.getDetailXeById= function(id_xe, result){
         result(results);
     });
 }
+xe.add= function(data, result){
+    connection.query(
+        'insert into xe (ten_xe, gia, id_hang_xe, id_danh_muc_xe, mota, mau, loai_uu_dai, gia_uu_dai) value (?, ?, ?, ?, ?, ?, ?, ?)',
+        [data.ten_xe, data.gia, data.id_hang_xe, data.id_danh_muc_xe, data.mota, null, data.loai_uu_dai, data.gia_uu_dai],
+        (err, results) => {
+          if(err) throw err;
+          console.log(results);
+          result(results);
+        })
+}
 export default xe;

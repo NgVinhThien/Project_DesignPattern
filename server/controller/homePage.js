@@ -1,7 +1,10 @@
 import { DanhMucProxy, DanhMucAdapter } from '../model/danhmuc.js';
 import xe from "../model/xe.js";
 import { HangXeProxy } from '../model/hangxe.js';
-import {queryData} from '../model/factoryPattern.js'
+import {queryData} from '../model/factoryPattern.js';
+import multer from 'multer';
+
+
 export const getHomepage = async (req, res) => {
 
   const queryXe=  queryData('xe');
@@ -13,7 +16,10 @@ export const getHomepage = async (req, res) => {
   const queryHangXe= queryData('hangxe');
   const dataHX= await queryHangXe.getData();
 
-  return res.render('homePage.ejs', {dataXe: dataXe, dataDM: dataDM, dataHX: dataHX});
+  const queryUuDai = queryData('uudai');
+  const dataUD = await queryUuDai.getData();
+
+  return res.render('homePage.ejs', {dataXe: dataXe, dataDM: dataDM, dataHX: dataHX, dataUD: dataUD});
 };
 export const getDetailXe= (req, res)=>{
     
@@ -21,15 +27,72 @@ export const getDetailXe= (req, res)=>{
     // console.log(">>>Check request params", id_xe);
     xe.getDetailXeById(id_xe, (result)=> {
         // console.log(">>>Check details Xe", result);
-        return res.render('detailsXe.ejs', {detailsXe: JSON.stringify(result)});
+      return res.render('detailsXe.ejs', {detailsXe: JSON.stringify(result)});
     })
    
 }
 export const addXe= (req, res)=>{
   console.log(">>>Check post method",req.body);
-  return res.redirect('/web/home')
+  const dataInsert= {
+    ten_xe: req.body.ten_xe,
+    gia: req.body.gia_ban,
+    id_hang_xe: req.body.id_hang_xe,
+    id_danh_muc_xe: req.body.id_danh_muc_xe,
+    mota: req.body.mo_ta,
+    loai_uu_dai: req.body.loai_uu_dai,
+    gia_uu_dai: 20000000    
+  }
+  xe.add(dataInsert,(result) => {
+    
+    const affectRow= result.affectedRows;
+    // console.log(affectRow);
+    if (affectRow>=1) {
+      return res.redirect('/web/home')
+    } else {
+      res.send("Thêm không thành công");
+    }
+  })
+  
 
 }
+// export const upload= multer().single('img_xe');
+// const storage= multer.diskStorage({
+//   destination: function(req, file, cb){
+//     cb(null, '/uploads')
+//   },
+//   filename: function (req, file, cb){
+//     cb(null, file.fieldname + '-'+ Date.now()+ path.extname(file.originalname));
+//   }
+// });
+const upload = multer().single('img_xe');
+export const uploadImg= async(req, res)=>{
+  // let upload= multer({storage: storage, fileFilter: imageFilter}).single('img_xe');
+  upload(req, res, function(err){
+    console.log(">>>Check file", req.body.img_xe);
+    if (req.fileValidationError) {
+      return res.send(req.fileValidationError);
+    }
+    else if (!req.file) {
+        return res.send('Please select an image to upload');
+    }
+    else if (err instanceof multer.MulterError) {
+        return res.send(err);
+    }
+    else if (err) {
+        return res.send(err);
+    }
+  res.send(`You have uploaded this image: <hr/><img src="${req.file.path}" width="500"><hr /><a href="./">Upload another image</a>`);
+  })
+
+}
+// const imageFilter = function(req, file, cb) {
+//   // Accept images only
+//   if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+//       req.fileValidationError = 'Only image files are allowed!';
+//       return cb(new Error('Only image files are allowed!'), false);
+//   }
+//   cb(null, true);
+// };
 const decorator = (originalFn) => {
     return (req, res) => {
       let id = req.params.id;

@@ -12,6 +12,8 @@ export function queryData(type){
             return getXe;
         case 'hangxe':
             return getHangXe;
+        case 'uudai':
+            return getUuDai;
         default:
             throw new Error('Invalid component type'); 
     }
@@ -48,4 +50,14 @@ const getHangXe={
             });
         })
     }   
-}
+};
+const getUuDai={
+    getData(){
+        return new Promise((resolve, reject)=>{
+            connection.query("select * from uu_dai", (err, results)=>{
+                if(err) throw err; 
+                resolve(results);
+                });
+        })  
+    } 
+};
