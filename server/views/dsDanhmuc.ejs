@@ -31,19 +31,18 @@
           <table class="w3-table-all">
             <thead>
               <tr class="w3-light-grey w3-hover-green">
-                <th>Id</th>
                 <th>Tên danh mục</th>
                 <th>Ảnh danh mục</th>
                 <th>Hoạt động</th>
+                <th></th>
               </tr>
             </thead>
             <% for (let i = 0; i < dataDanhmuc.length; i++) { %>
               <tr class="w3-hover-text-green">
-                <td><%= dataDanhmuc[i].id%></td>
                 <td><%= dataDanhmuc[i].ten_danh_muc%></td>
                 <td><img src="<%= dataDanhmuc[i].anh_dai_dien%>" alt="" class="thumbnail-img"></td>
+                <td> <a class="link-button update-button" href="#">Update</a></td>
                 <td>
-                  <a class="link-button update-button" href="#">Update</a>
                   <a class="link-button delete-button" href="/web/danhmuc/xoa/<%= dataDanhmuc[i].id%>">Delete</a>
                 </td>
               </tr>
