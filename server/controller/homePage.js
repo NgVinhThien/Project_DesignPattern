@@ -1,7 +1,7 @@
 import { DanhMucProxy, DanhMucAdapter } from '../model/danhmuc.js';
 import xe from "../model/xe.js";
 import {Xe} from "../model/builderPattern.js"
-import { HangXeProxy } from '../model/hangxe.js';
+import { HangXeProxy, HangXeAdapter} from '../model/hangxe.js';
 import {queryData} from '../model/factoryPattern.js';
 import multer from 'multer';
 import getPrice from '../strategy_pattern/strategyPattern.js';
@@ -150,11 +150,13 @@ const decorator1 = (originalFn) => {
 const getAllIdHangXe = (req, res, data) => {
   res.render('hangXe.ejs', data);
 };
-
+const getAllHangXe = (req, res, data) => {
+  res.render('dsHangxe.ejs', data);
+};
 const decoratedGetAllIdHangXe = decorator1(getAllIdHangXe);
-
+const decoratedGetAllHangXe = decorator1(getAllHangXe);
 export { decoratedGetAllIdHangXe as getAllIdHangXe };
-
+export { decoratedGetAllHangXe as getAllHangXe };
 
 const addDanhMuc = (req, res) => {
 const danhMucData = {
@@ -193,5 +195,43 @@ danhMucAdapter.deleteDanhMuc(danhMucId, (err, isDeleted) => {
 };
 
 export { deleteDanhMuc };
+const addHangXe = (req, res) => {
+  const hangXeData = {
+    ten_hang_xe: req.body.ten_hang_xe,
+    logo: req.file.path,
+  };
+
+  const hangXeAdapter = new HangXeAdapter();
+  hangXeAdapter.addHangXe(hangXeData, (err, hangXe) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Lỗi khi thêm hãng xe.');
+    } else {
+      res.redirect('/web/hangxe');
+    }
+  });
+};
+
+export { addHangXe };
+
+const deleteHangXe = (req, res) => {
+  const hangXeId = req.params.id;
+
+  const hangXeAdapter = new HangXeAdapter();
+  hangXeAdapter.deleteHangXe(hangXeId, (err, isDeleted) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Lỗi khi xoá hãng xe.');
+    } else {
+      if (isDeleted) {
+        res.redirect('/web/hangxe');
+      } else {
+        res.status(404).send('Không tìm thấy hãng xe.');
+      }
+    }
+  });
+};
+
+export { deleteHangXe };
 
 

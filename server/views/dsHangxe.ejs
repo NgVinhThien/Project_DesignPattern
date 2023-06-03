@@ -11,39 +11,39 @@
 <div class="topnav">
     <a class="active" href="/web/home">Home</a>
     <div class="dropdown">
-      <a href="#" class="dropbtn">Danh mục</a>
-      <div class="dropdown-content">
-          <% for (let i = 0; i < dataDanhmuc.length; i++) { %>
-              <a href="/web/danhmuc/<%= dataDanhmuc[i].id%>"><%= dataDanhmuc[i].ten_danh_muc %></a>
-          <% } %>
-      </div>
+      <a href="/web/danhmuc" class="dropbtn">Danh mục</a>
     </div>
     <div class="dropdown">
-      <a href="/web/hangxe" class="dropbtn">Hãng xe</a>
-  </div>  
+        <a href="/web/hangxe" class="dropbtn">Hãng xe</a>
+        <div class="dropdown-content">
+            <% for (let i = 0; i < dataHangxe.length; i++) { %>
+                <a href="/web/hangxe/<%= dataHangxe[i].id%>"><%= dataHangxe[i].ten_hang_xe %></a>
+            <% } %>
+        </div>
+      </div> 
     <a href="#about">About</a>
-    <button id="addDanhMucButton" class="add-button">Thêm danh mục</button>
+    <button id="addDanhMucButton" class="add-button">Thêm hãng xe</button>
 </div>
       
       <div style="padding-left:16px">
         <div class="w3-container">
-          <h2>Danh sách danh mục</h2>        
+          <h2>Danh sách hãng xe</h2>        
           <table class="w3-table-all">
             <thead>
               <tr class="w3-light-grey w3-hover-green">
-                <th>Tên danh mục</th>
-                <th>Ảnh danh mục</th>
+                <th>Tên hãng xe</th>
+                <th>Ảnh đại diện</th>
                 <th>Hoạt động</th>
                 <th></th>
               </tr>
             </thead>
-            <% for (let i = 0; i < dataDanhmuc.length; i++) { %>
+            <% for (let i = 0; i < dataHangxe.length; i++) { %>
               <tr class="w3-hover-text-green">
-                <td><%= dataDanhmuc[i].ten_danh_muc%></td>
-                <td><img src="<%= dataDanhmuc[i].anh_dai_dien%>" alt="" class="thumbnail-img"></td>
+                <td><%= dataHangxe[i].ten_hang_xe%></td>
+                <td><img src="<%= dataHangxe[i].logo%>" alt="" class="thumbnail-img"></td>
                 <td> <a class="link-button update-button" href="#">Update</a></td>
                 <td>
-                  <a class="link-button delete-button" href="/web/danhmuc/xoa/<%= dataDanhmuc[i].id%>">Delete</a>
+                  <a class="link-button delete-button" href="/web/hangxe/xoa/<%= dataHangxe[i].id%>">Delete</a>
                 </td>
               </tr>
             <% } %>
@@ -55,12 +55,12 @@
       <div id="addDanhMucFormWrapper" class="hidden">
         <div id="addDanhMucForm">
           <h3>Thêm danh mục</h3>
-          <form id="danhMucForm" method="POST" action="/web/danhmuc/add" enctype="multipart/form-data">
-            <label for="tenDanhMuc">Tên danh mục:</label>
-            <input type="text" id="tenDanhMuc" name="ten_danh_muc" required>
+          <form id="danhMucForm" method="POST" action="/web/hangxe/add" enctype="multipart/form-data">
+            <label for="tenDanhMuc">Tên hãng xe:</label>
+            <input type="text" id="tenDanhMuc" name="ten_hang_xe" required>
             <br>
             <label for="anhDaiDien">Ảnh đại diện:</label>
-            <input type="file" id="anhDaiDien" name="anh_dai_dien" accept="image/*" required>
+            <input type="file" id="anhDaiDien" name="logo" accept="image/*" required>
             <br>
             <button type="submit">Lưu</button>
           </form>
