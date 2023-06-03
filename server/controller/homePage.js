@@ -1,5 +1,6 @@
 import { DanhMucProxy, DanhMucAdapter } from '../model/danhmuc.js';
 import xe from "../model/xe.js";
+import {Xe} from "../model/builderPattern.js"
 import { HangXeProxy } from '../model/hangxe.js';
 import {queryData} from '../model/factoryPattern.js';
 import multer from 'multer';
@@ -24,7 +25,6 @@ export const getHomepage = async (req, res) => {
 export const getDetailXe= (req, res)=>{
     
     let id_xe= req.params.id_xe;
-    let xe= new Xe().setId(id_xe);
     // console.log(">>>Check request params", id_xe);
     xe.getDetailXeById(id_xe, (result)=> {
         // console.log(">>>Check details Xe", result);
@@ -35,24 +35,34 @@ export const getDetailXe= (req, res)=>{
 export const addXe= (req, res)=>{
 
   console.log(">>>Check post method",req.body);
-  const dataInsert= {
-    ten_xe: req.body.ten_xe,
-    gia: req.body.gia_ban,
-    id_hang_xe: req.body.id_hang_xe,
-    id_danh_muc_xe: req.body.id_danh_muc_xe,
-    mota: req.body.mo_ta,
-    loai_uu_dai: req.body.loai_uu_dai,
-    gia_uu_dai: req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
-  }
-  xe.add(dataInsert,(result) => {
-    
+
+  // const dataInsert= {
+  //   ten_xe: req.body.ten_xe,
+  //   gia: req.body.gia_ban,
+  //   id_hang_xe: req.body.id_hang_xe,
+  //   id_danh_muc_xe: req.body.id_danh_muc_xe,
+  //   mota: req.body.mo_ta,
+  //   loai_uu_dai: req.body.loai_uu_dai,
+  //   gia_uu_dai: req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
+  // }
+  let gia_uu_dai= req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
+  const xe= new Xe()
+  .setTenXe(req.body.ten_xe)
+  .setGia(req.body.gia_ban)
+  .setIdHangXe(req.body.id_hang_xe)
+  .setIdDanhMucXe(req.body.id_danh_muc_xe)
+  .setLoaiUuDai(req.body.loai_uu_dai)
+  .setGiaUuDai(gia_uu_dai)
+
+  xe.add((result)=>{
     const affectRow= result.affectedRows;
-    // console.log(affectRow);
+    console.log(affectRow);
     if (affectRow>=1) {
       return res.redirect('/web/home')
     } else {
       res.send("Thêm không thành công");
     }
+
   })
 }
 

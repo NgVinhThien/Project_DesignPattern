@@ -55,19 +55,7 @@ export  class Xe{
         this.gia_uu_dai = gia_uu_dai;
         return this;
       }
-    getAll(result){
-        connection.query("SELECT xe.*, anh_xe.lien_ket_anh FROM xe LEFT JOIN ( SELECT id_xe, lien_ket_anh FROM anh_xe GROUP BY id_xe ) AS anh_xe ON xe.id = anh_xe.id_xe", (err, results)=>{
-            if(err) throw err; 
-            result(results);
-        });
-    }
-    getDetailXeById= function(id_xe, result){
-        connection.query("SELECT xe.*, anh_xe.lien_ket_anh FROM xe LEFT JOIN ( SELECT id_xe, lien_ket_anh FROM anh_xe GROUP BY id_xe, lien_ket_anh) AS anh_xe ON xe.id = anh_xe.id_xe  where xe.id=? limit 1", this.id, (err, results)=>{
-            if(err) throw err; 
-            result(results);
-        });
-    }
-    add= function(data, result){
+    add= function(result){
         connection.query(
             'insert into xe (ten_xe, gia, id_hang_xe, id_danh_muc_xe, mota, mau, loai_uu_dai, gia_uu_dai) value (?, ?, ?, ?, ?, ?, ?, ?)',
             [this.ten_xe, this.gia, this.id_hang_xe, this.id_danh_muc_xe, this.mota, null, this.loai_uu_dai, this.gia_uu_dai],
