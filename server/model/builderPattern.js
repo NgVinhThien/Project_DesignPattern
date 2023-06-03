@@ -54,6 +54,10 @@ export  class Xe{
     setGiaUuDai(gia_uu_dai) {
         this.gia_uu_dai = gia_uu_dai;
         return this;
+    }
+    setLienKetAnh(lien_ket_anh) {
+        this.lien_ket_anhn = lien_ket_anh;
+        return this;
       }
     add= function(result){
         connection.query(
@@ -61,8 +65,39 @@ export  class Xe{
             [this.ten_xe, this.gia, this.id_hang_xe, this.id_danh_muc_xe, this.mota, null, this.loai_uu_dai, this.gia_uu_dai],
             (err, results) => {
               if(err) throw err;
-              console.log(results);
+            //   console.log(results);
               result(results);
             })
     }
+    addImg= function(pathImg, result){
+        connection.query(
+            'insert into anh_xe(id_xe, lien_ket_anh) value (?, ?)',
+            [this.id, pathImg],
+            (err, results) => {
+              if(err) throw err;
+            //   console.log(results);
+              result(results);
+            })
+    }
+    deleteImg= function(result){
+        connection.query(
+            'delete from anh_xe where id_xe=?',
+            this.id,
+            (err, results)=>{
+                if(err) throw err;
+                result(results);
+            }
+        )
+    }
+    deleteXe= function(result){
+        connection.query(
+            'delete from xe where id= ?',
+            this.id,
+            (err, results)=>{
+                if(err) throw err;
+                result(results);
+            }
+        )
+    }
+    
 }

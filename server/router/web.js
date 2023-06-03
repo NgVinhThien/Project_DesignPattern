@@ -1,7 +1,7 @@
 import express from "express";
 import multer from 'multer';
 import path from 'path';
-import { getHomepage, getDetailXe, getAllIdDanhMuc, getAllIdHangXe ,addDanhMuc, getAlldanhmuc, deleteDanhMuc, uploadImg, addXe, getAllHangXe, addHangXe, deleteHangXe} from "../controller/homePage.js";
+import { getHomepage, getDetailXe, getAllIdDanhMuc, getAllIdHangXe ,addDanhMuc, getAlldanhmuc, deleteDanhMuc, uploadImg, addXe, getAllHangXe, addHangXe, deleteHangXe, deleteXe} from "../controller/homePage.js";
 const router= express.Router();
 
 const storage = multer.diskStorage({
@@ -51,9 +51,10 @@ router.get('/web/danhmuc/:id',getAllIdDanhMuc);
 router.get('/web/danhmuc',getAlldanhmuc);
 router.get('/web/hangxe',getAllHangXe);
 router.get('/web/hangxe/:id',getAllIdHangXe);
-router.post('/web/xe/add', addXe);
+router.post('/web/xe/add', upload.single("img_xe"), addXe);
 router.post('/web/danhmuc/add', addDanhMuc);
-router.post('/web/uploadImg', upload.single("img_xe"),uploadImg);
+// router.post('/web/uploadImg', upload.single("img_xe"),uploadImg);
 router.get('/web/danhmuc/xoa/:id', deleteDanhMuc);
 router.get('/web/hangxe/xoa/:id', deleteHangXe);
+router.get('/web/xe/delete/:id_xe', deleteXe);
 export default router;

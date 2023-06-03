@@ -80,8 +80,6 @@ class HangXe1 {
       }
     });
   }
-
-  // ...
 }
 
 class HangXeAdapter {

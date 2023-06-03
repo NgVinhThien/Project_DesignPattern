@@ -28,41 +28,70 @@ export const getDetailXe= (req, res)=>{
     // console.log(">>>Check request params", id_xe);
     xe.getDetailXeById(id_xe, (result)=> {
         // console.log(">>>Check details Xe", result);
-      return res.render('detailsXe.ejs', {detailsXe: JSON.stringify(result)});
+      return res.render('detailsXe.ejs', {detailsXe: result});
     })
-   
 }
-export const addXe= (req, res)=>{
+export const deleteXe= async(req, res)=>{
+  let id_xe= req.params.id_xe;
+  const xe= new Xe()
+  .setId(id_xe)
 
-  console.log(">>>Check post method",req.body);
 
-  // const dataInsert= {
-  //   ten_xe: req.body.ten_xe,
-  //   gia: req.body.gia_ban,
-  //   id_hang_xe: req.body.id_hang_xe,
-  //   id_danh_muc_xe: req.body.id_danh_muc_xe,
-  //   mota: req.body.mo_ta,
-  //   loai_uu_dai: req.body.loai_uu_dai,
-  //   gia_uu_dai: req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
-  // }
+  xe.deleteImg((result)=>{
+    const affectRow= result.affectedRows;
+    if (affectRow>=0) {
+      xe.deleteXe((result)=>{
+        const affectRow= result.affectedRows;
+        if (affectRow>=1) {
+          return res.redirect('/web/home')
+        } else {
+          res.send("Xóa thông tin không thành công");
+        }
+      })
+    } else {
+      res.send("Xóa ảnh không thành công");
+    }
+  })
+}
+export const addXe= async(req, res)=>{
+
+  if (req.fileValidationError) {
+    return res.send(req.fileValidationError);
+  }
+  else if (!req.file) {
+      return res.send('Please select an image to upload');
+  }
+  else if (req.file instanceof multer.MulterError) {
+      return res.send(err);
+  }
+  let pathImg= "/image/" + req.file.filename;
+  
   let gia_uu_dai= req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
   const xe= new Xe()
   .setTenXe(req.body.ten_xe)
   .setGia(req.body.gia_ban)
   .setIdHangXe(req.body.id_hang_xe)
   .setIdDanhMucXe(req.body.id_danh_muc_xe)
+  .setMota(req.body.mo_ta)
   .setLoaiUuDai(req.body.loai_uu_dai)
   .setGiaUuDai(gia_uu_dai)
 
   xe.add((result)=>{
     const affectRow= result.affectedRows;
-    console.log(affectRow);
+    const id_new= result.insertId;
     if (affectRow>=1) {
-      return res.redirect('/web/home')
+      xe.setId(id_new)
+      xe.addImg(pathImg, (result)=>{
+        const affectRow= result.affectedRows;
+        if (affectRow>=1) {
+          return res.redirect('/web/home')
+        } else {
+          res.send("Thêm ảnh không thành công");
+        }
+      })
     } else {
-      res.send("Thêm không thành công");
+      res.send("Thêm thông tin không thành công");
     }
-
   })
 }
 
@@ -146,7 +175,6 @@ const decorator1 = (originalFn) => {
     });
   };
 };
-
 const getAllIdHangXe = (req, res, data) => {
   res.render('hangXe.ejs', data);
 };

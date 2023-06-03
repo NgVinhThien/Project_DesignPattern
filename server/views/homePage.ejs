@@ -56,7 +56,7 @@
                 <td>
                   <a class="link-button details-button" href="/web/details/xe/<%= dataXe[i].id%>">Details</a>
                   <a class="link-button update-button" href="#">Update</a>
-                  <a class="link-button delete-button" href="#">Delete</a>
+                  <a class="link-button delete-button" onclick="return confirmDelete()" href="/web/xe/delete/<%= dataXe[i].id%>">Delete</a>
                 </td>
               </tr>
             <% } %>
@@ -64,7 +64,7 @@
         </div>
       </div>
       <!-- <div class="container"> -->
-        <form action="http://localhost:5000/web/xe/add" class="create-new-form" method="post">
+        <form action="http://localhost:5000/web/xe/add" enctype="multipart/form-data" class="create-new-form" method="post">
           <div class="row">
             <div class="col-25">
               <label for="fname">Tên xe</label>
@@ -128,27 +128,25 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-25">
+              <label for="fname">File ảnh</label>
+            </div>
+            <div class="col-75">
+              <input type="file"  id="fname" name="img_xe">
+            </div>
+          </div>
+          <div class="row">
             <!-- <input type="button" value="Submit"> -->
             <button type="submit" class="submitBtn">Thêm</button>
             <!-- button button1 -->
           </div>
         </form>
-      <!-- </div> -->
-      <form action="http://localhost:5000/web/uploadImg" enctype="multipart/form-data" class="create-new-form" method="post">
-        <div class="row">
-          <div class="col-25">
-            <label for="fname">File image</label>
-          </div>
-          <div class="col-75">
-            <input type="file"  id="fname" name="img_xe">
-          </div>
-        </div>
-        
-        <div class="row">
-          <!-- <input type="button" value="Submit"> -->
-          <button type="submit" class="submitBtn">Upload</button>
-          <!-- button button1 -->
-        </div>
-      </form>
+     
 </body>
+<script>
+  function confirmDelete() {
+    return confirm("Bạn có chắc chắn muốn xóa mục này?");
+    
+  }
+</script>
 </html>

@@ -2,10 +2,6 @@ import express from 'express';
 import configViewEngine from './configs/viewEngine.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import xe from './router/xe.js'
-import anhxe from './router/anhxe.js'
-import user from './router/user.js';
-import hoa_don from './router/hoa_don.js';
 import web from './router/web.js'
 // require('dotenv').config();
 
@@ -21,10 +17,6 @@ app.use(cors());
 
 configViewEngine(app);
 app.use('/', web);
-app.use('/', anhxe);
-app.use('/xe', xe);
-app.use('/', user);
-app.use('/', hoa_don);
 
 app.listen( PORT, ()=>{
     console.log("Running server...")
