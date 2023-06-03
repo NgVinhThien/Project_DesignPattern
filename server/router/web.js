@@ -8,7 +8,6 @@ const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "../server/public/image/");
     },
-
     // By default, multer removes file extensions so let's add them back
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
@@ -54,7 +53,7 @@ router.get('/web/hangxe',getAllHangXe);
 router.get('/web/hangxe/:id',getAllIdHangXe);
 router.post('/web/xe/add', addXe);
 router.post('/web/danhmuc/add', addDanhMuc);
-router.post('/web/uploadImg', upload.single('img_xe'),uploadImg);
+router.post('/web/uploadImg', upload.single("img_xe"),uploadImg);
 router.get('/web/danhmuc/xoa/:id', deleteDanhMuc);
 router.get('/web/hangxe/xoa/:id', deleteHangXe);
 export default router;
