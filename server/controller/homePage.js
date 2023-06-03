@@ -24,6 +24,7 @@ export const getHomepage = async (req, res) => {
 export const getDetailXe= (req, res)=>{
     
     let id_xe= req.params.id_xe;
+    let xe= new Xe().setId(id_xe);
     // console.log(">>>Check request params", id_xe);
     xe.getDetailXeById(id_xe, (result)=> {
         // console.log(">>>Check details Xe", result);
@@ -52,23 +53,12 @@ export const addXe= (req, res)=>{
       res.send("Thêm không thành công");
     }
   })
-  
-
 }
-// export const upload= multer().single('img_xe');
-// const storage= multer.diskStorage({
-//   destination: function(req, file, cb){
-//     cb(null, '/uploads')
-//   },
-//   filename: function (req, file, cb){
-//     cb(null, file.fieldname + '-'+ Date.now()+ path.extname(file.originalname));
-//   }
-// });
-const upload = multer().single('img_xe');
+
 export const uploadImg= async(req, res)=>{
-  // let upload= multer({storage: storage, fileFilter: imageFilter}).single('img_xe');
-  upload(req, res, function(err){
-    console.log(">>>Check file", req.body.img_xe);
+
+  let upload = multer().single('img_xe');
+  upload(req, res, (err)=>{
     if (req.fileValidationError) {
       return res.send(req.fileValidationError);
     }
@@ -78,21 +68,14 @@ export const uploadImg= async(req, res)=>{
     else if (err instanceof multer.MulterError) {
         return res.send(err);
     }
-    else if (err) {
-        return res.send(err);
-    }
-  res.send(`You have uploaded this image: <hr/><img src="${req.file.path}" width="500"><hr /><a href="./">Upload another image</a>`);
-  })
+    let pathImg= "/image/" + req.file.filename;
+    console.log(">>>check path imgae", pathImg);
+    res.send(`You have uploaded this image: <hr/><img src="${pathImg}" width="500"><hr /><a href="./">Upload another image</a>`);
+  });
 
+  
 }
-// const imageFilter = function(req, file, cb) {
-//   // Accept images only
-//   if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
-//       req.fileValidationError = 'Only image files are allowed!';
-//       return cb(new Error('Only image files are allowed!'), false);
-//   }
-//   cb(null, true);
-// };
+
 const decorator = (originalFn) => {
     return (req, res) => {
       let id = req.params.id;
@@ -107,8 +90,6 @@ const decorator = (originalFn) => {
               dataDanhmuc: danhmucData,
               dataHangxe: hangxeData
             };
-    
-    
             originalFn(req, res, data);
           });
         });
@@ -116,7 +97,6 @@ const decorator = (originalFn) => {
     };
   };
   
-
   const getAllIdDanhMuc = (req, res, data) => {
     res.render('danhmucXe.ejs', data);
   };
@@ -145,7 +125,6 @@ const decorator = (originalFn) => {
               dataDanhmuc: danhmucData,
               dataHangxe: hangxeData
             };
-  
             originalFn(req, res, data);
           });
         });
