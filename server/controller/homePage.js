@@ -3,7 +3,7 @@ import xe from "../model/xe.js";
 import { HangXeProxy } from '../model/hangxe.js';
 import {queryData} from '../model/factoryPattern.js';
 import multer from 'multer';
-
+import getPrice from '../strategy_pattern/strategyPattern.js';
 
 export const getHomepage = async (req, res) => {
 
@@ -33,6 +33,7 @@ export const getDetailXe= (req, res)=>{
    
 }
 export const addXe= (req, res)=>{
+
   console.log(">>>Check post method",req.body);
   const dataInsert= {
     ten_xe: req.body.ten_xe,
@@ -41,7 +42,7 @@ export const addXe= (req, res)=>{
     id_danh_muc_xe: req.body.id_danh_muc_xe,
     mota: req.body.mo_ta,
     loai_uu_dai: req.body.loai_uu_dai,
-    gia_uu_dai: 20000000    
+    gia_uu_dai: req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
   }
   xe.add(dataInsert,(result) => {
     
@@ -77,103 +78,108 @@ export const uploadImg= async(req, res)=>{
 }
 
 const decorator = (originalFn) => {
-    return (req, res) => {
-      let id = req.params.id;
-    
-      DanhMucProxy.getAllIdDanhMuc(id, (result) => {
-        let danhmucXe = result;
-    
-        DanhMucProxy.getAll((danhmucData) => {
-          HangXeProxy.getAll((hangxeData) => {
-            const data = {
-              danhmucXe: danhmucXe,
-              dataDanhmuc: danhmucData,
-              dataHangxe: hangxeData
-            };
-            originalFn(req, res, data);
-          });
+  return (req, res) => {
+    let id = req.params.id;
+  
+    DanhMucProxy.getAllIdDanhMuc(id, (result) => {
+      let danhmucXe = result;
+  
+      DanhMucProxy.getAll((danhmucData) => {
+        HangXeProxy.getAll((hangxeData) => {
+          const data = {
+            danhmucXe: danhmucXe,
+            dataDanhmuc: danhmucData,
+            dataHangxe: hangxeData
+          };
+  
+  
+          originalFn(req, res, data);
         });
       });
-    };
+    });
   };
-  
-  const getAllIdDanhMuc = (req, res, data) => {
-    res.render('danhmucXe.ejs', data);
-  };
-  const getAlldanhmuc = (req, res, data) => {
-    res.render('dsDanhmuc.ejs', data);
-  };
-
-  const decoratedGetAllIdDanhMuc = decorator(getAllIdDanhMuc);
-  const decoratedGetAllDanhMuc = decorator(getAlldanhmuc);
- 
-  export { decoratedGetAllIdDanhMuc as getAllIdDanhMuc };
-  export { decoratedGetAllDanhMuc as getAlldanhmuc };
+};
 
 
-  const decorator1 = (originalFn) => {
-    return (req, res) => {
-      let id = req.params.id;
-  
-      HangXeProxy.getAllIdHangXe(id, (result) => {
-        let hangxe = result;
-  
-        DanhMucProxy.getAll((danhmucData) => {
-          HangXeProxy.getAll((hangxeData) => {
-            const data = {
-              idHangXe: hangxe,
-              dataDanhmuc: danhmucData,
-              dataHangxe: hangxeData
-            };
-            originalFn(req, res, data);
-          });
+const getAllIdDanhMuc = (req, res, data) => {
+  res.render('danhmucXe.ejs', data);
+};
+const getAlldanhmuc = (req, res, data) => {
+  res.render('dsDanhmuc.ejs', data);
+};
+
+const decoratedGetAllIdDanhMuc = decorator(getAllIdDanhMuc);
+const decoratedGetAllDanhMuc = decorator(getAlldanhmuc);
+
+export { decoratedGetAllIdDanhMuc as getAllIdDanhMuc };
+export { decoratedGetAllDanhMuc as getAlldanhmuc };
+
+
+const decorator1 = (originalFn) => {
+  return (req, res) => {
+    let id = req.params.id;
+
+    HangXeProxy.getAllIdHangXe(id, (result) => {
+      let hangxe = result;
+
+      DanhMucProxy.getAll((danhmucData) => {
+        HangXeProxy.getAll((hangxeData) => {
+          const data = {
+            idHangXe: hangxe,
+            dataDanhmuc: danhmucData,
+            dataHangxe: hangxeData
+          };
+
+          originalFn(req, res, data);
         });
       });
-    };
+    });
   };
-  
-  const getAllIdHangXe = (req, res, data) => {
-    res.render('hangXe.ejs', data);
-  };
-  
-  const decoratedGetAllIdHangXe = decorator1(getAllIdHangXe);
-  
+};
+
+const getAllIdHangXe = (req, res, data) => {
+  res.render('hangXe.ejs', data);
+};
+
+const decoratedGetAllIdHangXe = decorator1(getAllIdHangXe);
+
 export { decoratedGetAllIdHangXe as getAllIdHangXe };
-  
-const addDanhMuc = (req, res) => {
-  const danhMucData = {
-    ten_danh_muc: req.body.ten_danh_muc,
-    anh_dai_dien: req.body.anh_dai_dien,
-  };
 
-  const danhMucAdapter = new DanhMucAdapter();
-  danhMucAdapter.addDanhMuc(danhMucData, (err, danhMuc) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Lỗi khi thêm danh mục.');
-    } else {
-      res.redirect('/web/danhmuc');
-    }
-  });
+
+const addDanhMuc = (req, res) => {
+const danhMucData = {
+  ten_danh_muc: req.body.ten_danh_muc,
+  anh_dai_dien: req.file.path, 
+};
+
+const danhMucAdapter = new DanhMucAdapter();
+danhMucAdapter.addDanhMuc(danhMucData, (err, danhMuc) => {
+  if (err) {
+    console.error(err);
+    res.status(500).send('Lỗi khi thêm danh mục.');
+  } else {
+    res.redirect('/web/danhmuc');
+  }
+});
 };
 
 export { addDanhMuc };
 const deleteDanhMuc = (req, res) => {
-  const danhMucId = req.params.id;
+const danhMucId = req.params.id;
 
-  const danhMucAdapter = new DanhMucAdapter();
-  danhMucAdapter.deleteDanhMuc(danhMucId, (err, isDeleted) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Lỗi khi xoá danh mục.');
+const danhMucAdapter = new DanhMucAdapter();
+danhMucAdapter.deleteDanhMuc(danhMucId, (err, isDeleted) => {
+  if (err) {
+    console.error(err);
+    res.status(500).send('Lỗi khi xoá danh mục.');
+  } else {
+    if (isDeleted) {
+      res.redirect('/web/danhmuc');
     } else {
-      if (isDeleted) {
-        res.redirect('/web/danhmuc');
-      } else {
-        res.status(404).send('Không tìm thấy danh mục.');
-      }
+      res.status(404).send('Không tìm thấy danh mục.');
     }
-  });
+  }
+});
 };
 
 export { deleteDanhMuc };

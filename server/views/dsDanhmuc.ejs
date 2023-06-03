@@ -55,12 +55,12 @@
       <div id="addDanhMucFormWrapper" class="hidden">
         <div id="addDanhMucForm">
           <h3>Thêm danh mục</h3>
-          <form id="danhMucForm" method="POST" action="/web/danhmuc/add">
+          <form id="danhMucForm" method="POST" action="/web/danhmuc/add" enctype="multipart/form-data">
             <label for="tenDanhMuc">Tên danh mục:</label>
             <input type="text" id="tenDanhMuc" name="ten_danh_muc" required>
             <br>
             <label for="anhDaiDien">Ảnh đại diện:</label>
-            <input type="text" id="anhDaiDien" name="anh_dai_dien" required>
+            <input type="file" id="anhDaiDien" name="anh_dai_dien" accept="image/*" required>
             <br>
             <button type="submit">Lưu</button>
           </form>
