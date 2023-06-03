@@ -25,6 +25,26 @@ const imageFilter = function (req, file, cb) {
 };
 let upload = multer({ storage: storage, fileFilter: imageFilter });
 
+
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+
+const storage1 = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, path.join('uploads')); 
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + '-' + file.originalname);
+    },
+  });
+  const upload1 = multer({ storage: storage1 });
+  
+router.post('/web/danhmuc/add', upload1.single('anh_dai_dien'), addDanhMuc);
+router.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')))
 router.get('/web/home', getHomepage);
 router.get('/web/details/xe/:id_xe', getDetailXe);
 router.get('/web/danhmuc/:id',getAllIdDanhMuc);

@@ -55,16 +55,19 @@ class DanhMuc1 {
 
   static addDanhMuc(danhMucData, callback) {
     const { ten_danh_muc, anh_dai_dien } = danhMucData;
+  
 
+    const imagePath = `http://localhost:5000/${anh_dai_dien}`;
+  
     const query = 'INSERT INTO danh_muc_xe (ten_danh_muc, anh_dai_dien) VALUES (?, ?)';
-    connection.query(query, [ten_danh_muc, anh_dai_dien], (err, result) => {
+    connection.query(query, [ten_danh_muc, imagePath], (err, result) => {
       if (err) {
         callback(err, null);
       } else {
         const danhMuc = new DanhMuc1({
           id: result.insertId,
           ten_danh_muc: ten_danh_muc,
-          anh_dai_dien: anh_dai_dien,
+          anh_dai_dien: imagePath,
         });
         callback(null, danhMuc);
       }
