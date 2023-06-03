@@ -3,7 +3,7 @@ import xe from "../model/xe.js";
 import { HangXeProxy } from '../model/hangxe.js';
 import {queryData} from '../model/factoryPattern.js';
 import multer from 'multer';
-
+import getPrice from '../strategy_pattern/strategyPattern.js';
 
 export const getHomepage = async (req, res) => {
 
@@ -32,6 +32,7 @@ export const getDetailXe= (req, res)=>{
    
 }
 export const addXe= (req, res)=>{
+
   console.log(">>>Check post method",req.body);
   const dataInsert= {
     ten_xe: req.body.ten_xe,
@@ -40,7 +41,7 @@ export const addXe= (req, res)=>{
     id_danh_muc_xe: req.body.id_danh_muc_xe,
     mota: req.body.mo_ta,
     loai_uu_dai: req.body.loai_uu_dai,
-    gia_uu_dai: 20000000    
+    gia_uu_dai: req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
   }
   xe.add(dataInsert,(result) => {
     
