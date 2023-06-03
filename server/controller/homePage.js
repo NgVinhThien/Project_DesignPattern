@@ -231,7 +231,6 @@ const deleteHangXe = (req, res) => {
     }
   });
 };
-
 export { deleteHangXe };
 
 
