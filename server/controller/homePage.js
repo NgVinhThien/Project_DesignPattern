@@ -31,12 +31,41 @@ export const getDetailXe= (req, res)=>{
       return res.render('detailsXe.ejs', {detailsXe: result});
     })
 }
+export const updateXe= async(req, res)=>{
+  const queryUuDai = queryData('uudai');
+  const dataUD = await queryUuDai.getData();
+
+  const id_xe= req.params.id_xe;
+  const xe= new Xe().setId(id_xe);
+  xe.getDetails((result)=>{
+    res.render('updateXe.ejs', {detailsXe: result, dataUD: dataUD});
+  })
+  
+}
+export const handleUpdateXe= async(req, res)=>{
+  let gia_uu_dai= req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
+  console.log(">>>Check update", req.body.id_xe)
+  const xe= new Xe()
+  .setId(req.body.id_xe)
+  .setTenXe(req.body.ten_xe)
+  .setGia(req.body.gia_ban)
+  .setMota(req.body.mo_ta)
+  .setLoaiUuDai(req.body.loai_uu_dai)
+  .setGiaUuDai(gia_uu_dai)
+  xe.updateXe((result)=>{
+    const affectRow= result.affectedRows;
+        if (affectRow>=1) {
+          return res.redirect('/web/home')
+        } else {
+          res.send("Cập nhật thông tin không thành công");
+        }
+  })
+  
+}
 export const deleteXe= async(req, res)=>{
   let id_xe= req.params.id_xe;
   const xe= new Xe()
   .setId(id_xe)
-
-
   xe.deleteImg((result)=>{
     const affectRow= result.affectedRows;
     if (affectRow>=0) {

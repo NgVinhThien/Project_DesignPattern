@@ -99,5 +99,25 @@ export  class Xe{
             }
         )
     }
+    getDetails= function(result){
+        connection.query(
+            'select * from xe where id=?', 
+            this.id,
+            (err, results)=>{
+                if(err) throw err;
+                result(results);
+            }
+        )
+    }
+    updateXe=  function(result){
+        connection.query(
+            'update xe set ten_xe= ?, gia= ?, mota= ?, loai_uu_dai=?, gia_uu_dai= ? where id= ?', 
+            [this.ten_xe, this.gia, this.mota, this.loai_uu_dai, this.gia_uu_dai, this.id],
+            (err, results)=>{
+                if(err) throw err;
+                result(results);
+            }
+        )
+    }
     
 }
