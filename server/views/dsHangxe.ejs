@@ -41,9 +41,8 @@
               <tr class="w3-hover-text-green">
                 <td><%= dataHangxe[i].ten_hang_xe%></td>
                 <td><img src="<%= dataHangxe[i].logo%>" alt="" class="thumbnail-img"></td>
-                <td> <a class="link-button update-button" href="#">Update</a></td>
                 <td>
-                  <a class="link-button delete-button" href="/web/hangxe/xoa/<%= dataHangxe[i].id%>">Delete</a>
+                  <a class="link-button delete-button" href="/web/hangxe/xoa/<%= dataHangxe[i].id%>" onclick="return confirmDelete()">Delete</a>
                 </td>
               </tr>
             <% } %>
@@ -83,7 +82,15 @@
           display: none;
         }
       </style>
-      
+      <script>
+        function confirmDelete() {
+          if (confirm("Bạn có chắc chắn muốn xóa?")) {
+            return true; 
+          } else {
+            return false; 
+          }
+        }
+      </script>
 
                
 </body>
