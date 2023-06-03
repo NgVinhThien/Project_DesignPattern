@@ -42,3 +42,70 @@ class HangXeProxy {
 }
 
 export { HangXe, HangXeProxy };
+class HangXe1 {
+  constructor(hangXe) {
+    this.id = hangXe.id;
+    this.ten_hang_xe = hangXe.ten_hang_xe;
+    this.logo = hangXe.logo;
+    // ...
+  }
+
+  static addHangXe(hangXeData, callback) {
+    const { ten_hang_xe, logo } = hangXeData;
+
+    const imagePath = `http://localhost:5000/${logo}`;
+
+    const query = 'INSERT INTO hang_xe (ten_hang_xe, logo) VALUES (?, ?)';
+    connection.query(query, [ten_hang_xe, imagePath], (err, result) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        const hangXe = new HangXe1({
+          id: result.insertId,
+          ten_hang_xe: ten_hang_xe,
+          logo: imagePath,
+        });
+        callback(null, hangXe);
+      }
+    });
+  }
+
+  static deleteHangXe(id, callback) {
+    const query = 'DELETE FROM hang_xe WHERE id = ?';
+    connection.query(query, [id], (err, result) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, result.affectedRows > 0);
+      }
+    });
+  }
+
+  // ...
+}
+
+class HangXeAdapter {
+  addHangXe(hangXeData, callback) {
+    HangXe1.addHangXe(hangXeData, (err, hangXe) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, hangXe);
+      }
+    });
+  }
+  deleteHangXe(id, callback) {
+    HangXe1.deleteHangXe(id, (err, isDeleted) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, isDeleted);
+      }
+    });
+  }
+
+  // ...
+}
+
+export { HangXe1, HangXeAdapter };
+
