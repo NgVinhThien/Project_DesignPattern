@@ -22,10 +22,10 @@ export  class Xe{
               result(results);
             })
     }
-    addImg= function(pathImg, result){
+    addImg= function(id_xe,pathImg, result){
         connection.query(
             'insert into anh_xe(id_xe, lien_ket_anh) value (?, ?)',
-            [this.id, pathImg],
+            [id_xe, pathImg],
             (err, results) => {
               if(err) throw err;
             //   console.log(results);

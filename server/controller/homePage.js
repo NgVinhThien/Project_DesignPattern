@@ -1,5 +1,4 @@
 import { DanhMucProxy, DanhMucAdapter } from '../model/danhmuc.js';
-// import xe from "../model/xe.js";
 import {XeBuilder} from "../model/builderPattern.js"
 import {AnhXe} from "../model/anhxe.js"
 import { HangXeProxy, HangXeAdapter} from '../model/hangxe.js';
@@ -41,7 +40,8 @@ export const updateXe= async(req, res)=>{
   const dataUD = await queryUuDai.getData();
 
   const id_xe= req.params.id_xe;
-  const xe= new Xe().setId(id_xe);
+  const builder= new XeBuilder();
+  const xe= builder.setId(id_xe).build();
   xe.getDetails((result)=>{
     res.render('updateXe.ejs', {detailsXe: result, dataUD: dataUD});
   })
@@ -50,13 +50,14 @@ export const updateXe= async(req, res)=>{
 export const handleUpdateXe= async(req, res)=>{
   let gia_uu_dai= req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
   console.log(">>>Check update", req.body.id_xe)
-  const xe= new Xe()
-  .setId(req.body.id_xe)
-  .setTenXe(req.body.ten_xe)
-  .setGia(req.body.gia_ban)
-  .setMota(req.body.mo_ta)
-  .setLoaiUuDai(req.body.loai_uu_dai)
-  .setGiaUuDai(gia_uu_dai)
+  const builder= new XeBuilder()
+  const xe= builder.setId(req.body.id_xe)
+    .setTenXe(req.body.ten_xe)
+    .setGia(req.body.gia_ban)
+    .setMota(req.body.mo_ta)
+    .setLoaiUuDai(req.body.loai_uu_dai)
+    .setGiaUuDai(gia_uu_dai)
+    .build()
   xe.updateXe((result)=>{
     const affectRow= result.affectedRows;
         if (affectRow>=1) {
@@ -69,8 +70,8 @@ export const handleUpdateXe= async(req, res)=>{
 }
 export const deleteXe= async(req, res)=>{
   let id_xe= req.params.id_xe;
-  const xe= new Xe()
-  .setId(id_xe)
+  const builder= new XeBuilder();
+  const xe=builder.setId(id_xe).build()
   xe.deleteImg((result)=>{
     const affectRow= result.affectedRows;
     if (affectRow>=0) {
@@ -101,21 +102,21 @@ export const addXe= async(req, res)=>{
   let pathImg= "/image/" + req.file.filename;
   
   let gia_uu_dai= req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
-  const xe= new Xe()
-  .setTenXe(req.body.ten_xe)
-  .setGia(req.body.gia_ban)
-  .setIdHangXe(req.body.id_hang_xe)
-  .setIdDanhMucXe(req.body.id_danh_muc_xe)
-  .setMota(req.body.mo_ta)
-  .setLoaiUuDai(req.body.loai_uu_dai)
-  .setGiaUuDai(gia_uu_dai)
+  const build= new XeBuilder();
+  const xe= build.setTenXe(req.body.ten_xe)
+        .setGia(req.body.gia_ban)
+        .setIdHangXe(req.body.id_hang_xe)
+        .setIdDanhMucXe(req.body.id_danh_muc_xe)
+        .setMota(req.body.mo_ta)
+        .setLoaiUuDai(req.body.loai_uu_dai)
+        .setGiaUuDai(gia_uu_dai)
+        .build()
 
   xe.add((result)=>{
     const affectRow= result.affectedRows;
     const id_new= result.insertId;
     if (affectRow>=1) {
-      xe.setId(id_new)
-      xe.addImg(pathImg, (result)=>{
+      xe.addImg(id_new,pathImg, (result)=>{
         const affectRow= result.affectedRows;
         if (affectRow>=1) {
           return res.redirect('/web/home')
@@ -128,28 +129,6 @@ export const addXe= async(req, res)=>{
     }
   })
 }
-
-// export const uploadImg= async(req, res)=>{
-
-//   let upload = multer().single('img_xe');
-//   upload(req, res, (err)=>{
-//     if (req.fileValidationError) {
-//       return res.send(req.fileValidationError);
-//     }
-//     else if (!req.file) {
-//         return res.send('Please select an image to upload');
-//     }
-//     else if (err instanceof multer.MulterError) {
-//         return res.send(err);
-//     }
-//     let pathImg= "/image/" + req.file.filename;
-//     console.log(">>>check path imgae", pathImg);
-//     res.send(`You have uploaded this image: <hr/><img src="${pathImg}" width="500"><hr /><a href="./">Upload another image</a>`);
-//   });
-
-  
-// }
-
 const decorator = (originalFn) => {
   return (req, res) => {
     let id = req.params.id;
