@@ -1,63 +1,64 @@
-class Data{
-    getData(){} 
-}
-
 import connection from "../common/connect.js";
 
-export function queryData(type){
-    switch (type){
-        case 'danhmuc':
-            return getDanhMuc;
-        case 'xe':
-            return getXe;
-        case 'hangxe':
-            return getHangXe;
-        case 'uudai':
-            return getUuDai;
-        default:
-            throw new Error('Invalid component type'); 
-    }
+export class Data {
+  getData() {}
 }
 
-const getDanhMuc={
-    getData(){
-        return new Promise((resolve, reject)=>{
-            connection.query("select * from danh_muc_xe", (err, results)=>{
-                if(err) throw err; 
-                resolve(results);
-                });
-        })  
-    } 
-};
+export function queryData(type) {
+  switch (type) {
+    case 'danhmuc':
+      return new DanhMucData();
+    case 'xe':
+      return new XeData();
+    case 'hangxe':
+      return new HangXeData();
+    case 'uudai':
+      return new UuDaiData();
+    default:
+      throw new Error('Invalid component type');
+  }
+}
 
-const getXe={
-    getData(){
-        return new Promise((resolve, reject)=>{
-            connection.query("SELECT xe.*, anh_xe.lien_ket_anh FROM xe LEFT JOIN ( SELECT id_xe, lien_ket_anh FROM anh_xe GROUP BY id_xe ) AS anh_xe ON xe.id = anh_xe.id_xe", (err, results)=>{
-                if(err) throw err; 
-                resolve(results);
-            });
-        })
-    }
-};
+class DanhMucData extends Data {
+  getData() {
+    return new Promise((resolve, reject) => {
+      connection.query("select * from danh_muc_xe", (err, results) => {
+        if (err) throw err;
+        resolve(results);
+      });
+    });
+  }
+}
 
-const getHangXe={
-    getData(){
-        return new Promise((resolve, reject)=>{
-            connection.query("select * from hang_xe", (err, results)=>{
-                if(err) throw err; 
-                resolve(results);
-            });
-        })
-    }   
-};
-const getUuDai={
-    getData(){
-        return new Promise((resolve, reject)=>{
-            connection.query("select * from uu_dai", (err, results)=>{
-                if(err) throw err; 
-                resolve(results);
-                });
-        })  
-    } 
-};
+class XeData extends Data {
+  getData() {
+    return new Promise((resolve, reject) => {
+      connection.query("SELECT xe.*, anh_xe.lien_ket_anh FROM xe LEFT JOIN ( SELECT id_xe, lien_ket_anh FROM anh_xe GROUP BY id_xe ) AS anh_xe ON xe.id = anh_xe.id_xe", (err, results) => {
+        if (err) throw err;
+        resolve(results);
+      });
+    });
+  }
+}
+
+class HangXeData extends Data {
+  getData() {
+    return new Promise((resolve, reject) => {
+      connection.query("select * from hang_xe", (err, results) => {
+        if (err) throw err;
+        resolve(results);
+      });
+    });
+  }
+}
+
+class UuDaiData extends Data {
+  getData() {
+    return new Promise((resolve, reject) => {
+      connection.query("select * from uu_dai", (err, results) => {
+        if (err) throw err;
+        resolve(results);
+      });
+    });
+  }
+}
