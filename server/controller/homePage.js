@@ -1,6 +1,6 @@
 import { DanhMucProxy, DanhMucAdapter } from '../model/danhmuc.js';
-import xe from "../model/xe.js";
-import {Xe} from "../model/builderPattern.js"
+// import xe from "../model/xe.js";
+import {XeBuilder} from "../model/builderPattern.js"
 import {AnhXe} from "../model/anhxe.js"
 import { HangXeProxy, HangXeAdapter} from '../model/hangxe.js';
 import {queryData} from '../model/factoryPattern.js';
@@ -26,7 +26,8 @@ export const getHomepage = async (req, res) => {
 export const getDetailXe= (req, res)=>{
     
     let id_xe= req.params.id_xe;
-    const xe= new Xe().setId(id_xe)
+    const builder= new XeBuilder()
+    const xe= builder.setId(id_xe).build()
     const anh_xe= new AnhXe().setIdXe(id_xe)
     
     xe.getDetails((result)=>{
@@ -34,11 +35,6 @@ export const getDetailXe= (req, res)=>{
         return res.render('detailsXe.ejs', {detailsXe: result, imgXe: rsAnh});
       })
     })
-    // console.log(">>>Check request params", id_xe);
-    // xe.getDetailXeById(id_xe, (result)=> {
-    //     // console.log(">>>Check details Xe", result);
-      
-    // })
 }
 export const updateXe= async(req, res)=>{
   const queryUuDai = queryData('uudai');

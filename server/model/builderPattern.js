@@ -1,123 +1,55 @@
 import connection from '../common/connect.js';
-export  class Xe{
-    constructor(id, ten_xe, gia, id_hang_xe, id_danh_muc_xe, mota, mau, loai_uu_dai, gia_uu_dai){
-        this.id= id
-        this.ten_xe= ten_xe
-        this.gia= gia
-        this.id_hang_xe= id_hang_xe
-        this.id_danh_muc_xe= id_danh_muc_xe
-        this.mota= mota
-        this.mau= mau
-        this.loai_uu_dai= loai_uu_dai
-        this.gia_uu_dai= gia_uu_dai
+import {Xe} from "./xe.js"
+export  class XeBuilder{
+    constructor(){
+        this.xe= new Xe();
     }
     setId(id) {
-        this.id = id;
+        this.xe.id = id;
         return this;
     }
     
     setTenXe(ten_xe) {
-        this.ten_xe = ten_xe;
+        this.xe.ten_xe = ten_xe;
         return this;
     }
     
     setGia(gia) {
-        this.gia = gia;
+        this.xe.gia = gia;
         return this;
     }
     
     setIdHangXe(id_hang_xe) {
-        this.id_hang_xe = id_hang_xe;
+        this.xe.id_hang_xe = id_hang_xe;
         return this;
     }
     
     setIdDanhMucXe(id_danh_muc_xe) {
-        this.id_danh_muc_xe = id_danh_muc_xe;
+        this.xe.id_danh_muc_xe = id_danh_muc_xe;
         return this;
     }
     
     setMota(mota) {
-        this.mota = mota;
+        this.xe.mota = mota;
         return this;
     }
     
     setMau(mau) {
-        this.mau = mau;
+        this.xe.mau = mau;
         return this;
     }
     
     setLoaiUuDai(loai_uu_dai) {
-        this.loai_uu_dai = loai_uu_dai;
+        this.xe.loai_uu_dai = loai_uu_dai;
         return this;
     }
     
     setGiaUuDai(gia_uu_dai) {
-        this.gia_uu_dai = gia_uu_dai;
+        this.xe.gia_uu_dai = gia_uu_dai;
         return this;
     }
-    setLienKetAnh(lien_ket_anh) {
-        this.lien_ket_anhn = lien_ket_anh;
-        return this;
-      }
-    add= function(result){
-        connection.query(
-            'insert into xe (ten_xe, gia, id_hang_xe, id_danh_muc_xe, mota, mau, loai_uu_dai, gia_uu_dai) value (?, ?, ?, ?, ?, ?, ?, ?)',
-            [this.ten_xe, this.gia, this.id_hang_xe, this.id_danh_muc_xe, this.mota, null, this.loai_uu_dai, this.gia_uu_dai],
-            (err, results) => {
-              if(err) throw err;
-            //   console.log(results);
-              result(results);
-            })
+    build(){
+        return this.xe;
+        // return new Xe(this.id, this.ten_xe, this.gia, this.id_hang_xe, this.id_danh_muc_xe, this.mota, this.mau, this.loai_uu_dai, this.gia_uu_dai)
     }
-    addImg= function(pathImg, result){
-        connection.query(
-            'insert into anh_xe(id_xe, lien_ket_anh) value (?, ?)',
-            [this.id, pathImg],
-            (err, results) => {
-              if(err) throw err;
-            //   console.log(results);
-              result(results);
-            })
-    }
-    deleteImg= function(result){
-        connection.query(
-            'delete from anh_xe where id_xe=?',
-            this.id,
-            (err, results)=>{
-                if(err) throw err;
-                result(results);
-            }
-        )
-    }
-    deleteXe= function(result){
-        connection.query(
-            'delete from xe where id= ?',
-            this.id,
-            (err, results)=>{
-                if(err) throw err;
-                result(results);
-            }
-        )
-    }
-    getDetails= function(result){
-        connection.query(
-            'select * from xe where id=?', 
-            this.id,
-            (err, results)=>{
-                if(err) throw err;
-                result(results);
-            }
-        )
-    }
-    updateXe=  function(result){
-        connection.query(
-            'update xe set ten_xe= ?, gia= ?, mota= ?, loai_uu_dai=?, gia_uu_dai= ? where id= ?', 
-            [this.ten_xe, this.gia, this.mota, this.loai_uu_dai, this.gia_uu_dai, this.id],
-            (err, results)=>{
-                if(err) throw err;
-                result(results);
-            }
-        )
-    }
-    
 }
