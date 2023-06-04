@@ -31,18 +31,35 @@ class DanhMuc {
 }
 
 class DanhMucProxy {
-  static getAll(callback) {
-    DanhMuc.getAll((results) => {
-      callback(results);
-    });
+  constructor() {
+    this.cache = new Map();
   }
+
+  static getAll(callback) {
+    const proxy = new DanhMucProxy();
+    if (proxy.cache.has('allDanhMuc')) {
+      callback(proxy.cache.get('allDanhMuc'));
+    } else {
+      DanhMuc.getAll((results) => {
+        proxy.cache.set('allDanhMuc', results);
+        callback(results);
+      });
+    }
+  }
+
   static getAllIdDanhMuc(id, callback) {
-    DanhMuc.getAllIdDanhMuc(id, (danhmuc) => {
-    
-      callback(danhmuc);
-    });
+    const proxy = new DanhMucProxy();
+    if (proxy.cache.has(`danhMuc_${id}`)) {
+      callback(proxy.cache.get(`danhMuc_${id}`));
+    } else {
+      DanhMuc.getAllIdDanhMuc(id, (danhmuc) => {
+        proxy.cache.set(`danhMuc_${id}`, danhmuc);
+        callback(danhmuc);
+      });
+    }
   }
 }
+
 
 export { DanhMuc, DanhMucProxy };
 class DanhMuc1 {

@@ -27,7 +27,7 @@
       
       <div style="padding-left:16px">
         <div class="w3-container">
-          <h2>Danh sách xe</h2>        
+          <h2>Danh sách xe của danh mục</h2>        
           <table class="w3-table-all">
             <thead>
               <tr class="w3-light-grey w3-hover-green">
@@ -44,8 +44,8 @@
                 <td><%= danhmucXe[i].gia%></td>
                 <td>
                   <a class="link-button details-button" href="/web/details/xe/<%= danhmucXe[i].id%>">Details</a>
-                  <a class="link-button update-button" href="#">Update</a>
-                  <a class="link-button delete-button" href="#">Delete</a>
+                  <a class="link-button update-button" href="/web/xe/update/<%= danhmucXe[i].id%>">Update</a>
+                  <a class="link-button delete-button" href="/web/xe/delete/<%= danhmucXe[i].id%>">Delete</a>
                 </td>
               </tr>
             <% } %>

@@ -29,15 +29,32 @@ class HangXe {
 }
 
 class HangXeProxy {
-  static getAll(callback) {
-    HangXe.getAll((results) => {
-      callback(results);
-    });
+  constructor() {
+    this.cache = new Map();
   }
+
+  static getAll(callback) {
+    const proxy = new HangXeProxy();
+    if (proxy.cache.has('allHangXe')) {
+      callback(proxy.cache.get('allHangXe'));
+    } else {
+      HangXe.getAll((results) => {
+        proxy.cache.set('allHangXe', results);
+        callback(results);
+      });
+    }
+  }
+
   static getAllIdHangXe(id, callback) {
-    HangXe.getAllIdHangXe(id, (hangxe) => {
-      callback(hangxe);
-    });
+    const proxy = new HangXeProxy();
+    if (proxy.cache.has(`hangXe_${id}`)) {
+      callback(proxy.cache.get(`hangXe_${id}`));
+    } else {
+      HangXe.getAllIdHangXe(id, (hangxe) => {
+        proxy.cache.set(`hangXe_${id}`, hangxe);
+        callback(hangxe);
+      });
+    }
   }
 }
 
