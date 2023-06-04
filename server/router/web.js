@@ -34,7 +34,7 @@ const __dirname = path.dirname(__filename);
 
 const storage1 = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, path.join('uploads')); 
+      cb(null, path.join('../server/public/image/')); 
     },
     filename: (req, file, cb) => {
       cb(null, Date.now() + '-' + file.originalname);
@@ -43,7 +43,7 @@ const storage1 = multer.diskStorage({
   const upload1 = multer({ storage: storage1 });
   
 router.post('/web/danhmuc/add', upload1.single('anh_dai_dien'), addDanhMuc);
-router.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')))
+router.use('/server/public/image/', express.static(path.join(__dirname, '..', '../server/public/image/')))
 router.post('/web/hangxe/add', upload1.single('logo'), addHangXe);
 router.get('/web/home', getHomepage);
 router.get('/web/details/xe/:id_xe', getDetailXe);
