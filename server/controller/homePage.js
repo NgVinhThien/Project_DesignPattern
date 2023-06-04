@@ -1,6 +1,7 @@
 import { DanhMucProxy, DanhMucAdapter } from '../model/danhmuc.js';
 import xe from "../model/xe.js";
 import {Xe} from "../model/builderPattern.js"
+import {AnhXe} from "../model/anhxe.js"
 import { HangXeProxy, HangXeAdapter} from '../model/hangxe.js';
 import {queryData} from '../model/factoryPattern.js';
 import multer from 'multer';
@@ -25,11 +26,19 @@ export const getHomepage = async (req, res) => {
 export const getDetailXe= (req, res)=>{
     
     let id_xe= req.params.id_xe;
-    // console.log(">>>Check request params", id_xe);
-    xe.getDetailXeById(id_xe, (result)=> {
-        // console.log(">>>Check details Xe", result);
-      return res.render('detailsXe.ejs', {detailsXe: result});
+    const xe= new Xe().setId(id_xe)
+    const anh_xe= new AnhXe().setIdXe(id_xe)
+    
+    xe.getDetails((result)=>{
+      anh_xe.getAnh((rsAnh)=>{
+        return res.render('detailsXe.ejs', {detailsXe: result, imgXe: rsAnh});
+      })
     })
+    // console.log(">>>Check request params", id_xe);
+    // xe.getDetailXeById(id_xe, (result)=> {
+    //     // console.log(">>>Check details Xe", result);
+      
+    // })
 }
 export const updateXe= async(req, res)=>{
   const queryUuDai = queryData('uudai');
@@ -124,26 +133,26 @@ export const addXe= async(req, res)=>{
   })
 }
 
-export const uploadImg= async(req, res)=>{
+// export const uploadImg= async(req, res)=>{
 
-  let upload = multer().single('img_xe');
-  upload(req, res, (err)=>{
-    if (req.fileValidationError) {
-      return res.send(req.fileValidationError);
-    }
-    else if (!req.file) {
-        return res.send('Please select an image to upload');
-    }
-    else if (err instanceof multer.MulterError) {
-        return res.send(err);
-    }
-    let pathImg= "/image/" + req.file.filename;
-    console.log(">>>check path imgae", pathImg);
-    res.send(`You have uploaded this image: <hr/><img src="${pathImg}" width="500"><hr /><a href="./">Upload another image</a>`);
-  });
+//   let upload = multer().single('img_xe');
+//   upload(req, res, (err)=>{
+//     if (req.fileValidationError) {
+//       return res.send(req.fileValidationError);
+//     }
+//     else if (!req.file) {
+//         return res.send('Please select an image to upload');
+//     }
+//     else if (err instanceof multer.MulterError) {
+//         return res.send(err);
+//     }
+//     let pathImg= "/image/" + req.file.filename;
+//     console.log(">>>check path imgae", pathImg);
+//     res.send(`You have uploaded this image: <hr/><img src="${pathImg}" width="500"><hr /><a href="./">Upload another image</a>`);
+//   });
 
   
-}
+// }
 
 const decorator = (originalFn) => {
   return (req, res) => {
@@ -159,8 +168,7 @@ const decorator = (originalFn) => {
             dataDanhmuc: danhmucData,
             dataHangxe: hangxeData
           };
-  
-  
+
           originalFn(req, res, data);
         });
       });

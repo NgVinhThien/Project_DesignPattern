@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Create three unequal columns that floats next to each other */
+.column {
+    float: left;
+    padding: 10px;
+}
+.details {
+    min-height: 35px;
+    border-radius: 5px;
+    align-content: center;
+    padding: 7px;
+    border: 1px solid grey;
+}
+.title{
+    font-weight: bold;
+}
+.info-component{
+    margin-bottom: 10px;
+}
+  
+.left{
+    width: 40%;
+} 
+.right {
+    width: 60%;
+}
+  
+  /* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

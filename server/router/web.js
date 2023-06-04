@@ -1,7 +1,7 @@
 import express from "express";
 import multer from 'multer';
 import path from 'path';
-import { getHomepage, getDetailXe, getAllIdDanhMuc, getAllIdHangXe ,addDanhMuc, getAlldanhmuc, deleteDanhMuc, uploadImg, addXe, getAllHangXe, addHangXe, deleteHangXe, deleteXe, updateXe, handleUpdateXe} from "../controller/homePage.js";
+import { getHomepage, getDetailXe, getAllIdDanhMuc, getAllIdHangXe ,addDanhMuc, getAlldanhmuc, deleteDanhMuc, addXe, getAllHangXe, addHangXe, deleteHangXe, deleteXe, updateXe, handleUpdateXe} from "../controller/homePage.js";
 const router= express.Router();
 
 const storage = multer.diskStorage({
