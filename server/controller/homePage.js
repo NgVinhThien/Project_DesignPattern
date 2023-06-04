@@ -35,6 +35,7 @@ export const getDetailXe= (req, res)=>{
       })
     })
 }
+
 export const updateXe= async(req, res)=>{
   const queryUuDai = queryData('uudai');
   const dataUD = await queryUuDai.getData();
@@ -45,11 +46,10 @@ export const updateXe= async(req, res)=>{
   xe.getDetails((result)=>{
     res.render('updateXe.ejs', {detailsXe: result, dataUD: dataUD});
   })
-  
 }
+
 export const handleUpdateXe= async(req, res)=>{
   let gia_uu_dai= req.body.gia_ban - getPrice(req.body.gia_ban, req.body.loai_uu_dai)
-  console.log(">>>Check update", req.body.id_xe)
   const builder= new XeBuilder()
   const xe= builder.setId(req.body.id_xe)
     .setTenXe(req.body.ten_xe)
@@ -65,9 +65,9 @@ export const handleUpdateXe= async(req, res)=>{
         } else {
           res.send("Cập nhật thông tin không thành công");
         }
-  })
-  
+  }) 
 }
+
 export const deleteXe= async(req, res)=>{
   let id_xe= req.params.id_xe;
   const builder= new XeBuilder();
@@ -88,6 +88,7 @@ export const deleteXe= async(req, res)=>{
     }
   })
 }
+
 export const addXe= async(req, res)=>{
 
   if (req.fileValidationError) {
@@ -129,6 +130,7 @@ export const addXe= async(req, res)=>{
     }
   })
 }
+
 const decorator = (originalFn) => {
   return (req, res) => {
     let id = req.params.id;

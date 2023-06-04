@@ -1,4 +1,3 @@
-import connection from '../common/connect.js';
 import {Xe} from "./xe.js"
 export  class XeBuilder{
     constructor(){
@@ -50,6 +49,5 @@ export  class XeBuilder{
     }
     build(){
         return this.xe;
-        // return new Xe(this.id, this.ten_xe, this.gia, this.id_hang_xe, this.id_danh_muc_xe, this.mota, this.mau, this.loai_uu_dai, this.gia_uu_dai)
     }
 }
